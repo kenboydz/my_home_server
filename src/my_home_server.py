@@ -115,7 +115,7 @@ class BooksPageHandler(BaseHandler):
                 self.render("books.html")
             # 读取书目录
             elif command == "read_book_names":
-                rst = {"book_manu": book_loader.book_names}
+                rst = {"book_names": book_loader.book_names}
                 self.write_json(rst)
             # 读取书内容
             elif command == "read_book":
