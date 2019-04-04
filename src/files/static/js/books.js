@@ -7,9 +7,11 @@ let book_display = new Vue({
     data: {
         book_names: [],
         current_book_name: "",
+        current_book_part: "",
+        current_book_chapter: "",
         book_info: {},  // 格式 {'title': ..., ...}
-        book_struct: {},  // 格式 {'part_name': ['charpter_name',...], ...}
-        book_chapters: {},  // 格式 {'chapter_name': xxx, ...}
+        book_struct: [],  // 格式 [{'part_name': xxx, 'chapter_names':  ['chapter_name1',...]}, ...]
+        book_chapters: [],  // 格式 [{"name": xxx, "value": xxx},...]
         book_cache: {}
     },
     mounted: function() {
@@ -30,12 +32,19 @@ let book_display = new Vue({
                 // 记录 book_info
                 book.book_info = data_dict.info;
                 // 记录 book_struct 和 book_chapters
-                book.book_struct = {};  // 清除 book_struct
-                book.book_chapters = {};  // 清除 book_chapters
+                book.book_struct = [];  // 清除 book_struct
+                book.book_chapters = [];  // 清除 book_chapters
                 for (var part_key in data_dict.content) {
                     let part = data_dict.content[part_key];
-                    book.book_struct[part_key] = Object.keys(part);
-                    Object.assign(book.book_chapters, part);
+                    let part_struct = {};
+                    part_struct['part_name'] = part_key;
+                    part_struct['chapter_names'] = Object.keys(part);
+                    book.book_struct.push(part_struct);
+                    for (var chapter_key in part) {
+                        let chapter = {'name': chapter_key,
+                                       'value': part[chapter_key]};
+                        book.book_chapters.push(chapter);
+                    }
                 }
                 book_display.book_cache[book_name] = book;
             };
