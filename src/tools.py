@@ -12,6 +12,8 @@ import xml.dom.minidom
 class BookLoader:
     '''读取 book 用 class
     '''
+    _book_names = None  # 所有的书名
+    _book_paths = None  # 书目对应的保存路径
 
     def __init__(self,
                  books_json_path=r'./files/data/books/books.json'):
@@ -19,6 +21,7 @@ class BookLoader:
         books_json_path: 存放 books.json 的路径
         '''
         self._book_paths = self._read_books_path(books_json_path)
+        self._book_names = list(self._book_paths.keys())
 
     def _read_books_path(self, books_json_path)->dict:
         '''读取 books 中书目信息
@@ -44,10 +47,14 @@ class BookLoader:
             book_dict = pickle.load(f)
         return book_dict
 
+    @property
+    def book_names(self):
+        return self._book_names
+
 
 def main():
     book_loader = BookLoader()
-    book = book_loader.load_book("American Gods")
+    book = book_loader.load_book(book_loader.book_names[0])
     print(book['content'].keys())
 
 if __name__ == "__main__":

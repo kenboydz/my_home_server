@@ -97,7 +97,7 @@ class IndexPageHandler(BaseHandler):
         self.render("index.html", user_name=self.current_user, soft_version=SOFT_VERSION)
 
 
-def read_noval_manu(manu_path=r'./files/data/books/manu.json')->dict:
+def read_book_manu(manu_path=r'./files/data/books/manu.json')->dict:
     '''读取 books 中书目信息
 
     输出格式：
@@ -108,14 +108,14 @@ def read_noval_manu(manu_path=r'./files/data/books/manu.json')->dict:
         manu = json.load(f)
     return manu
 
-noval_manu_dict = read_noval_manu()
-noval_cache = {}  # 书缓存
+book_manu_dict = read_book_manu()
+book_cache = {}  # 书缓存
 class BooksPageHandler(BaseHandler):
     '''books 主网页
     '''
 
-    def read_noval(self, noval_name)->dict:
-        '''从本地读取小说内容
+    def read_book(self, book_name)->dict:
+        '''从本地读取书内容
         
         读取的内容格式为 dict of json：
         {'info': {'title': xxx,
@@ -128,22 +128,22 @@ class BooksPageHandler(BaseHandler):
                      ...}
         }
         '''
-        # 查看小说是否在缓存中
-        if noval_name in noval_cache:
-            return noval_cache[noval_name]
-        file_name = os.path.basename(noval_name)
+        # 查看书是否在缓存中
+        if book_name in book_cache:
+            return book_cache[book_name]
+        file_name = os.path.basename(book_name)
         file_name = os.path.splitext(file_name)[0]
         file_name += r'.json'
         file_path = os.path.join("./files/data/books",
-                                 noval_manu_dict[noval_name])
+                                 book_manu_dict[book_name])
         print(file_path)
         if not os.path.exists(file_path):
-            noval = None
+            book = None
         else:
             with open(file_path, 'r', encoding='utf-8') as f:
-                noval = json.load(f)
-            noval_cache[noval_name] = noval  # 将小说放到缓存中
-        return noval
+                book = json.load(f)
+            book_cache[book_name] = book  # 将书放到缓存中
+        return book
 
     @gen.coroutine
     def get(self, *args):
@@ -154,20 +154,20 @@ class BooksPageHandler(BaseHandler):
             # 读取主页面
             if command is None:
                 self.render("books.html")
-            # 读取小说目录
+            # 读取书目录
             elif command == "read_manu":
-                rst = {"noval_manu": list(noval_manu_dict.keys())}
+                rst = {"book_manu": list(book_manu_dict.keys())}
                 self.write_json(rst)
-            # 读取小说内容
-            elif command == "read_noval":
-                file_name = self.param_args.get("noval_name", None)
+            # 读取书内容
+            elif command == "read_book":
+                file_name = self.param_args.get("book_name", None)
                 if file_name is None:
                     raise RuntimeError("获取书名参数失败")
-                noval_json = self.read_noval(file_name)
-                if noval_json is None:
+                book_json = self.read_book(file_name)
+                if book_json is None:
                     raise RuntimeError("获取书单内容失败")
-                rst = {"info": noval_json['info'],
-                    "content": noval_json['content']}
+                rst = {"info": book_json['info'],
+                    "content": book_json['content']}
                 self.write_json(rst)
             else:
                 self.write_error(400)

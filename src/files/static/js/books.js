@@ -2,14 +2,14 @@
 */
 'use strict';  // 严格模式，变量使用前需要先声明、无法删除变量等
 
-let noval_display = new Vue({
-    el: "#noval_display",
+let book_display = new Vue({
+    el: "#book_display",
     data: {
-        current_noval_name: "",
-        noval_manu: null,
-        noval_info: null,
-        noval_content: null,
-        noval_cache: {}
+        current_book_name: "",
+        book_manu: null,
+        book_info: null,
+        book_content: null,
+        book_cache: {}
     },
     mounted: function() {
         this.read_manu();
@@ -18,30 +18,30 @@ let noval_display = new Vue({
         read_manu: async function(event) {
             // 读取小说目录
             $.getJSON("/books/read_manu", function(data_dict) {
-                noval_display.noval_manu = data_dict.noval_manu;
+                book_display.book_manu = data_dict.book_manu;
             });
         },
-        read_noval: async function(event) {
+        read_book: async function(event) {
             // 读取小说内容
-            let noval_name = event.target.innerText;
-            if (noval_name in noval_display.noval_cache) {
+            let book_name = event.target.innerText;
+            if (book_name in book_display.book_cache) {
                 // 已经在缓存区，直接读取
-                let cache = noval_display.noval_cache;
-                noval_display.noval_info = cache[noval_name].info;
-                noval_display.noval_content = cache[noval_name].content;
-                noval_display.current_noval_name = noval_name;
+                let cache = book_display.book_cache;
+                book_display.book_info = cache[book_name].info;
+                book_display.book_content = cache[book_name].content;
+                book_display.current_book_name = book_name;
                 return;
             } else {
                 // 从服务器读取小说
                 const param = {
-                    'noval_name': noval_name,
+                    'book_name': book_name,
                 };
                 const argments = {'param': JSON.stringify(param)};
-                $.getJSON("/books/read_noval", argments, function(data_dict) {
-                    noval_display.noval_info = data_dict.info;
-                    noval_display.noval_content = data_dict.content;
-                    noval_display.noval_cache[noval_name] = data_dict;
-                    noval_display.current_noval_name = noval_name;
+                $.getJSON("/books/read_book", argments, function(data_dict) {
+                    book_display.book_info = data_dict.info;
+                    book_display.book_content = data_dict.content;
+                    book_display.book_cache[book_name] = data_dict;
+                    book_display.current_book_name = book_name;
                 });
             }
         }

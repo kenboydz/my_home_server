@@ -39,30 +39,30 @@
   </div></div></div>
 
   <!-- 文章显示部分 -->
-  <div class="container text-light bg-dark" id="noval_display">
+  <div class="container text-light bg-dark" id="book_display">
 
     <!-- 正文 -->
     <div class="row">
-      <h1>{{! current_noval_name }}</h1>
+      <h1>{{! current_book_name }}</h1>
     </div>
     <div class="row">
       <div class="col">
         <ul>
-          <li v-for="value in noval_manu">
-            <div @click="read_noval">{{! value }}</div>
+          <li v-for="value in book_manu">
+            <div @click="read_book">{{! value }}</div>
           </li>
         </ul>
       </div>
       <div class="col">
         <ul>
-          <li v-for="(value, key) in noval_info">
+          <li v-for="(value, key) in book_info">
           {{! key }} : {{! value }}
           </li>
         </ul>
       </div>
     </div>
     <div class="row"><div class="col">
-      {{! noval_content }}
+      {{! book_content }}
     </div></div>
     
     <!-- 页面导航 -->
@@ -71,8 +71,8 @@
           <li class="page-item disabled">
             <a class="page-link" href="#">Previous</a>
           </li>
-          <li class="page-item" v-for="(value, key) in noval_content">
-            <a class="page-link" href="#"> {{! noval_content[key] }} </a>
+          <li class="page-item" v-for="(value, key) in book_content">
+            <a class="page-link" href="#"> {{! book_content[key] }} </a>
           </li>
           <li class="page-item disabled">
             <a class="page-link" href="#">Next</a>
