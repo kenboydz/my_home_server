@@ -6,19 +6,19 @@ let book_display = new Vue({
     el: "#book_display",
     data: {
         current_book_name: "",
-        book_manu: null,
+        book_names: null,
         book_info: null,
         book_content: null,
         book_cache: {}
     },
     mounted: function() {
-        this.read_manu();
+        this.read_book_names();
     },
     methods: {
-        read_manu: async function(event) {
+        read_book_names: async function(event) {
             // 读取小说目录
-            $.getJSON("/books/read_manu", function(data_dict) {
-                book_display.book_manu = data_dict.book_manu;
+            $.getJSON("/books/read_book_names", function(data_dict) {
+                book_display.book_names = data_dict.book_names;
             });
         },
         read_book: async function(event) {

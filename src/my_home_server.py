@@ -12,6 +12,8 @@ from tornado.options import define, options, parse_config_file
 from tornado.escape import json_encode, json_decode
 from tornado.util import ObjectDict
 
+import tools
+
 
 # 软件信息
 SOFT_VERSION = "0.1.0"
@@ -97,53 +99,10 @@ class IndexPageHandler(BaseHandler):
         self.render("index.html", user_name=self.current_user, soft_version=SOFT_VERSION)
 
 
-def read_book_manu(manu_path=r'./files/data/books/manu.json')->dict:
-    '''读取 books 中书目信息
-
-    输出格式：
-    {'book_name': path, ...}
-    '''
-    assert os.path.exists(manu_path), "%s 书籍目录文件不存在" % manu_path
-    with open(manu_path, 'r', encoding='utf-8') as f:
-        manu = json.load(f)
-    return manu
-
-book_manu_dict = read_book_manu()
-book_cache = {}  # 书缓存
+book_loader = tools.BookLoader()
 class BooksPageHandler(BaseHandler):
     '''books 主网页
     '''
-
-    def read_book(self, book_name)->dict:
-        '''从本地读取书内容
-        
-        读取的内容格式为 dict of json：
-        {'info': {'title': xxx,
-                  'author': xxx,
-                  'nationality': xxx,
-                  'date': xxx,
-                  'language': xxx},
-         'content': {'part_1_name': {'chapter_1_name': content,
-                                     ...},
-                     ...}
-        }
-        '''
-        # 查看书是否在缓存中
-        if book_name in book_cache:
-            return book_cache[book_name]
-        file_name = os.path.basename(book_name)
-        file_name = os.path.splitext(file_name)[0]
-        file_name += r'.json'
-        file_path = os.path.join("./files/data/books",
-                                 book_manu_dict[book_name])
-        print(file_path)
-        if not os.path.exists(file_path):
-            book = None
-        else:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                book = json.load(f)
-            book_cache[book_name] = book  # 将书放到缓存中
-        return book
 
     @gen.coroutine
     def get(self, *args):
@@ -155,19 +114,19 @@ class BooksPageHandler(BaseHandler):
             if command is None:
                 self.render("books.html")
             # 读取书目录
-            elif command == "read_manu":
-                rst = {"book_manu": list(book_manu_dict.keys())}
+            elif command == "read_book_names":
+                rst = {"book_manu": book_loader.book_names}
                 self.write_json(rst)
             # 读取书内容
             elif command == "read_book":
-                file_name = self.param_args.get("book_name", None)
-                if file_name is None:
+                book_name = self.param_args.get("book_name", None)
+                if book_name is None:
                     raise RuntimeError("获取书名参数失败")
-                book_json = self.read_book(file_name)
-                if book_json is None:
+                book = book_loader.load_book(book_name)
+                if book is None:
                     raise RuntimeError("获取书单内容失败")
-                rst = {"info": book_json['info'],
-                    "content": book_json['content']}
+                rst = {"info": book['info'],
+                       "content": book['content']}
                 self.write_json(rst)
             else:
                 self.write_error(400)

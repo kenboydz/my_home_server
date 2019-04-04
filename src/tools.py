@@ -14,6 +14,7 @@ class BookLoader:
     '''
     _book_names = None  # 所有的书名
     _book_paths = None  # 书目对应的保存路径
+    _book_cache = {}  # 书籍缓存
 
     def __init__(self,
                  books_json_path=r'./files/data/books/books.json'):
@@ -35,8 +36,18 @@ class BookLoader:
             book_paths = json.load(f)
         return book_paths
 
-    def load_book(self, book_name)->dict:
-        '''将 book_name 读到内存中
+    def _load_book_from_cache(self, book_name)->dict:
+        '''从缓存区读取 book_name
+        '''
+        return self._book_cache.get(book_name, None)
+
+    def _dump_book_into_cache(self, book_name, book):
+        '''将 book 放到缓存区
+        '''
+        self._book_cache[book_name] = book
+
+    def _load_book_from_store(self, book_name)->dict:
+        '''从 book store 中读取 book
         '''
         book_path = self._book_paths.get(book_name, None)
         book_path = os.path.join(r"./files/data/books",
@@ -47,6 +58,15 @@ class BookLoader:
             book_dict = pickle.load(f)
         return book_dict
 
+    def load_book(self, book_name)->dict:
+        '''将 book_name 读到内存中
+        '''
+        book = self._load_book_from_cache(book_name)
+        if book is None:
+            book = self._load_book_from_store(book_name)
+            self._dump_book_into_cache(book_name, book)
+        return book
+
     @property
     def book_names(self):
         return self._book_names
@@ -54,6 +74,8 @@ class BookLoader:
 
 def main():
     book_loader = BookLoader()
+    book = book_loader.load_book(book_loader.book_names[0])
+    print(book['content'].keys())
     book = book_loader.load_book(book_loader.book_names[0])
     print(book['content'].keys())
 
