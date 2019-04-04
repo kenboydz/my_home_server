@@ -7,4 +7,4 @@ set PATH=%PATH%;X:\jianguo\Programmer\Python\IDE\WinPython-32bit-3.6.2.0Qt5\scri
 set PATH=%PATH%;X:\jianguo\Programmer\Python\IDE\WinPython-32bit-3.6.2.0Qt5\python-3.6.2\Scripts\
 
 ::启动程序
-python.exe import_books_to_json.py & PAUSE
+python.exe import_books_to_store.py & PAUSE

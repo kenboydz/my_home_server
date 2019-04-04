@@ -106,8 +106,8 @@ def _save_to_store(py_obj, save_path):
 
 
 def main():
-    book = _parse_book_xml(r"./books_xml/book.xml")
-    _save_to_store(book, r"./books_xml/book.pickle")
+    book = _parse_book_xml(r"./books_xml/American Gods.xml")
+    _save_to_store(book, r"./books_xml/American Gods.pickle")
 
 if __name__ == "__main__":
     main()
