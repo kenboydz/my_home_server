@@ -5,10 +5,11 @@
 let book_display = new Vue({
     el: "#book_display",
     data: {
+        book_names: [],
         current_book_name: "",
-        book_names: null,
-        book_info: null,
-        book_content: null,
+        book_info: {},  // 格式 {'title': ..., ...}
+        book_struct: {},  // 格式 {'part_name': ['charpter_name',...], ...}
+        book_chapters: {},  // 格式 {'chapter_name': xxx, ...}
         book_cache: {}
     },
     mounted: function() {
@@ -23,25 +24,41 @@ let book_display = new Vue({
         },
         read_book: async function(event) {
             // 读取小说内容
+            let dump_into_cache = function(book_name, data_dict) {
+                // 记录到缓存器
+                let book = {};
+                // 记录 book_info
+                book.book_info = data_dict.info;
+                // 记录 book_struct 和 book_chapters
+                book.book_struct = {};  // 清除 book_struct
+                book.book_chapters = {};  // 清除 book_chapters
+                for (var part_key in data_dict.content) {
+                    let part = data_dict.content[part_key];
+                    book.book_struct[part_key] = Object.keys(part);
+                    Object.assign(book.book_chapters, part);
+                }
+                book_display.book_cache[book_name] = book;
+            };
+            let load_from_cache = function(book_name) {
+                // 从缓存区装载
+                let book = book_display.book_cache[book_name];
+                book_display.current_book_name = book_name;
+                book_display.book_info = book.book_info;
+                book_display.book_struct = book.book_struct;
+                book_display.book_chapters = book.book_chapters;
+            };
             let book_name = event.target.innerText;
             if (book_name in book_display.book_cache) {
-                // 已经在缓存区，直接读取
-                let cache = book_display.book_cache;
-                book_display.book_info = cache[book_name].info;
-                book_display.book_content = cache[book_name].content;
-                book_display.current_book_name = book_name;
-                return;
+                load_from_cache(book_name);
             } else {
-                // 从服务器读取小说
+                // 从服务器读取小说到缓存区
                 const param = {
                     'book_name': book_name,
                 };
                 const argments = {'param': JSON.stringify(param)};
                 $.getJSON("/books/read_book", argments, function(data_dict) {
-                    book_display.book_info = data_dict.info;
-                    book_display.book_content = data_dict.content;
-                    book_display.book_cache[book_name] = data_dict;
-                    book_display.current_book_name = book_name;
+                    dump_into_cache(book_name, data_dict);
+                    load_from_cache(book_name);
                 });
             }
         }

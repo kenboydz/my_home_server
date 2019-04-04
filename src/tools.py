@@ -7,6 +7,7 @@ import json
 import pickle
 from xml.dom.minidom import parse
 import xml.dom.minidom
+import copy
 
 
 class BookLoader:
@@ -56,7 +57,26 @@ class BookLoader:
             "在 %s 上没有找到图书" % book_path
         with open(book_path, 'rb') as f:
             book_dict = pickle.load(f)
+        book_dict['content'] = self._split_chapter_content(book_dict['content'])
         return book_dict
+
+    def _split_paragraph(self, chapter_content: str)->list:
+        '''将 chapter 根据段落拆分成 list
+        '''
+        content_list = re.split(r'[\r\n]+', chapter_content.strip())
+        return list(map(lambda x: x.strip(), content_list))
+
+    def _split_chapter_content(self, content: dict)->dict:
+        '''将 content/chapter 内容的段落放到 list 中
+
+        content: {'part_name': {'chapter_name': xxx, ...}, ...}
+        '''
+        content_copy = copy.deepcopy(content)
+        for part_name, chapters in content.items():
+            for chapter_name, chapter_content in chapters.items():
+                content_copy[part_name][chapter_name] = \
+                    self._split_paragraph(chapter_content)
+        return content_copy
 
     def load_book(self, book_name)->dict:
         '''将 book_name 读到内存中
