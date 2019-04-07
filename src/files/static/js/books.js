@@ -24,7 +24,7 @@ let book_display = new Vue({
                 book_display.book_names = data_dict.book_names;
             });
         },
-        read_book: async function(event) {
+        load_book: async function(event) {
             // 读取小说内容
             let dump_into_cache = function(book_name, data_dict) {
                 // 记录到缓存器
@@ -65,7 +65,7 @@ let book_display = new Vue({
                     'book_name': book_name,
                 };
                 const argments = {'param': JSON.stringify(param)};
-                $.getJSON("/books/read_book", argments, function(data_dict) {
+                $.getJSON("/books/load_book", argments, function(data_dict) {
                     dump_into_cache(book_name, data_dict);
                     load_from_cache(book_name);
                 });

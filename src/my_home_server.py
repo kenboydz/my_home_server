@@ -118,7 +118,7 @@ class BooksPageHandler(BaseHandler):
                 rst = {"book_names": book_loader.book_names}
                 self.write_json(rst)
             # 读取书内容
-            elif command == "read_book":
+            elif command == "load_book":
                 book_name = self.param_args.get("book_name", None)
                 if book_name is None:
                     raise RuntimeError("获取书名参数失败")

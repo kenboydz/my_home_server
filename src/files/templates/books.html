@@ -41,48 +41,49 @@
   <!-- 文章显示部分 -->
   <div class="container text-light bg-dark" id="book_display">
 
-    <!-- 正文 -->
-    <div class="row">
-      <h1>{{! current_book_name }}</h1>
-    </div>
-    <div class="row">
-      <div class="col">
-        <ul>
-          <li v-for="value in book_names">
-            <div @click="read_book">{{! value }}</div>
-          </li>
-        </ul>
-      </div>
-      <div class="col">
-        <ul>
-          <li v-for="(value, key) in book_info">
-          {{! key }} : {{! value }}
-          </li>
-        </ul>
+  <!-- 文章导航部分 -->
+  <div class="row"><div class="col">
+    <button type="button" class="btn btn-dark" data-toggle="collapse" data-target="#book_store">书目</button>
+    <div id="book_store" class="collapse">
+      <!-- 书目列表 -->
+      <div class="row">
+        <div class="col">
+          <ul class="list-group">
+              <a href="#" class="list-group-item list-group-item-dark" v-for="value in book_names">
+                <div @click="load_book">{{! value }}</div>
+              </a>
+            </ul>
+        </div>
       </div>
     </div>
-    <div class="row"><div class="col">
-      <div v-if="book_chapters.length != 0">
-        <p v-for="value in book_chapters[0].value">
-          {{! value }}
-        </p>
-      </div>
-    </div></div>
+  </div></div>
+
+    <!-- 正文，使用表格做显示控制 -->
+    <table class="table table-dark" v-if="book_chapters.length != 0">
+      <thead>
+        <tr><td>
+          {{! book_info.title }}
+        </td></tr>
+      </thead>
+      <tbody>
+        <tr><td>
+          <div class="d-none" v-for="chapter in book_chapters">
+            <p v-for="line in chapter.value">
+              {{! line }}
+            </p>
+          </div>
+        </td></tr>
+      </tbody>
+    </table>
     
     <!-- 页面导航 -->
-      <nav aria-label="Page navigation example">
+      <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
-          <li class="page-item disabled">
-            <a class="page-link" href="#">Previous</a>
-          </li>
           <div v-if="book_struct.length != 0">
           <li class="page-item" v-for="(value, index) in book_struct[0]['chapter_names']">
-            <a class="page-link" href="#"> {{! value }} </a>
+            <a class="page-link" href="#"> {{! index+1 }} </a>
           </li>
           </div>
-          <li class="page-item disabled">
-            <a class="page-link" href="#">Next</a>
-          </li>
         </ul>
       </nav>
 
