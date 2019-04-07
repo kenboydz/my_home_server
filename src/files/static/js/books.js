@@ -7,8 +7,9 @@ let book_display = new Vue({
     data: {
         book_names: [],
         current_book_name: "",
-        current_book_part: "",
-        current_book_chapter: "",
+        current_book_part_name: "",
+        current_book_chapter_name: "",
+        current_book_chapter_index: 0,
         book_info: {},  // 格式 {'title': ..., ...}
         book_struct: [],  // 格式 [{'part_name': xxx, 'chapter_names':  ['chapter_name1',...]}, ...]
         book_chapters: [],  // 格式 [{"name": xxx, "value": xxx},...]

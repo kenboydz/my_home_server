@@ -66,13 +66,13 @@
         </td></tr>
       </thead>
       <tbody>
-        <tr><td>
-          <div class="d-none" v-for="chapter in book_chapters">
+        <tr v-show="false" v-for="chapter in book_chapters">
+          <td>
             <p v-for="line in chapter.value">
               {{! line }}
             </p>
-          </div>
-        </td></tr>
+          </td>
+        </tr>
       </tbody>
     </table>
     
