@@ -106,7 +106,7 @@ let book_display = new Vue({
                 book_display.book_struct = book.book_struct;
                 book_display.book_chapters = book.book_chapters;
                 book_display.is_book_loaded = true;
-                book_display.page_numbers_calculate();
+                book_display.page_numbers_calculate_();
             };
 
             let book_name = event.target.innerText;
@@ -141,8 +141,15 @@ let book_display = new Vue({
                     load_from_cache(book_name);
                 });
             }
+            $('#book_store').removeClass('show');  // 关闭折叠
         },
-        page_numbers_calculate: function() {
+        chapter_selected: function(event) {
+            this.current_block_index = event.target.attributes['chapter-index'].value;
+            this.current_book_chapter_name = event.target.attributes['chapter-name'].value;
+            this.current_block_index = 0;
+            $('#book_info').removeClass('show');  // 关闭折叠
+        },
+        page_numbers_calculate_: function() {
             if (!book_display.is_book_loaded) {
                 return;
             }
@@ -161,10 +168,10 @@ let book_display = new Vue({
     },
     watch: {
         current_book_chapter_index: function() {
-            book_display.page_numbers_calculate();
+            book_display.page_numbers_calculate_();
         },
         current_block_index: function() {
-            book_display.page_numbers_calculate();
+            book_display.page_numbers_calculate_();
         }
     }
 });
