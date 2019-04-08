@@ -13,6 +13,7 @@ let book_display = new Vue({
         current_book_chapter_name: "",
         current_book_chapter_index: 0,
         current_block_index: 0,  // 每个 chapter 分开显示时的当前 index 值
+        page_numbers: [],  // 当前 chapter 分页所需 page_numbers
         book_info: {},  // 格式 {'title': ..., ...}
         book_struct: [],  // 格式 [{'part_name': xxx, 'chapter_names':  [{'name': 'chapter_name1', 'index': 0...}, ...], ...]
         book_chapters: [],  // 格式 [{"name": xxx, "line_blocks": [[line0, line1,...], ...]},...]
@@ -105,6 +106,7 @@ let book_display = new Vue({
                 book_display.book_struct = book.book_struct;
                 book_display.book_chapters = book.book_chapters;
                 book_display.is_book_loaded = true;
+                book_display.page_numbers_calculate();
             };
 
             let book_name = event.target.innerText;
@@ -140,10 +142,29 @@ let book_display = new Vue({
                 });
             }
         },
-        page_items: function(event) {
-            if (this.is_book_loaded) {
-                let all_pages = this.book_chapters[current_book_chapter_index]['line_blocks'].length;
+        page_numbers_calculate: function() {
+            if (!book_display.is_book_loaded) {
+                return;
             }
+            let max_index = book_display.book_chapters[book_display.current_book_chapter_index]['line_blocks'].length;
+            const start_page = Math.max(1, Math.min(max_index-4, book_display.current_block_index - 1));
+            const end_page = Math.min(max_index, start_page+4);
+            book_display.page_numbers = [];
+            for (var i=start_page;i<=end_page;i++) {
+                book_display.page_numbers.push(i);
+            }
+        },
+        page_nav_clicked: function(event) {
+            book_display.current_block_index = event.target.innerText - 1;
+            $('body,html').animate({scrollTop: 0}, 500);
+        }
+    },
+    watch: {
+        current_book_chapter_index: function() {
+            book_display.page_numbers_calculate();
+        },
+        current_block_index: function() {
+            book_display.page_numbers_calculate();
         }
     }
 });

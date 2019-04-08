@@ -17,100 +17,115 @@
   
   <body>
 
-  <!-- 顶部导航栏 -->
-  <div class="container text-light bg-dark"><div class="row"><div class="col">
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <a class="navbar-brand" href="/">Home</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/books">Books</span></a>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </div>
-    </nav>
-  </div></div></div>
+    <!-- 顶部导航栏 -->
+    <div class="container text-light bg-dark"><div class="row"><div class="col">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/books">Books</span></a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    </div></div></div>
 
-  <!-- 文章显示部分 -->
-  <div class="container text-light bg-dark" id="book_display">
+    <!-- 文章显示部分 -->
+    <div class="container text-light bg-dark" id="book_display">
 
-  <!-- 书目导航部分 -->
-  <div class="row"><div class="col">
-    <button type="button" class="btn btn-dark" data-toggle="collapse"
-      data-target="#book_store">Book Menu</button>
-    <div id="book_store" class="collapse">
-      <!-- 书目列表 -->
-      <ul>
-        <li v-for="book_name in book_names">
-          <button type="button" class="btn btn-dark" 
-            @click="load_book">{{! book_name }}</button>
-        </li>
-      </ul>
-    </div>
-  </div></div>
+      <!-- 书目导航部分 -->
+      <div class="row"><div class="col">
+        <button type="button" class="btn btn-dark" data-toggle="collapse"
+          data-target="#book_store">Book Menu</button>
+        <div id="book_store" class="collapse">
+          <!-- 书目列表 -->
+          <ul>
+            <li v-for="book_name in book_names">
+              <button type="button" class="btn btn-dark" 
+                @click="load_book">{{! book_name }}</button>
+            </li>
+          </ul>
+        </div>
+      </div></div>
 
-  <!-- 书信息结构导航部分 -->
-  <div class="row" v-show="current_book_name != ''"><div class="col">
-    <button type="button" class="btn btn-dark" data-toggle="collapse"
-      data-target="#book_info"><h4>{{! book_info.title }}</h4></button>
-    <div id="book_info" class="collapse show">
-      <ul  v-for="part in book_struct">
-          <li>{{! part.part_name }}
-            <ul v-for="chapter in part.chapter_names">
-              <li><button type="button" class="btn btn-dark"
-                    @click="current_book_chapter_index = chapter.index; current_book_chapter_name = chapter.name">
-                    {{! chapter.name }}
-              </button></li>
+      <!-- 书信息结构导航部分 -->
+      <div class="row" v-show="current_book_name != ''"><div class="col">
+        <button type="button" class="btn btn-dark" data-toggle="collapse"
+          data-target="#book_info"><h4>{{! book_info.title }}</h4></button>
+        <div id="book_info" class="collapse show">
+          <ul  v-for="part in book_struct">
+              <li>{{! part.part_name }}
+                <ul v-for="chapter in part.chapter_names">
+                  <li><button type="button" class="btn btn-dark"
+                        @click="current_book_chapter_index = chapter.index; current_book_chapter_name = chapter.name; current_block_index = 0;">
+                        {{! chapter.name }}
+                  </button></li>
+                </ul>
+              </li>
             </ul>
+        </div>
+      </div></div>
+
+        <!-- 上部chapter页导航 -->
+      <div class="row"><div class="col">
+        <ul class="pagination justify-content-center" v-if="is_book_loaded">
+          <li class="page-item" v-for="number in page_numbers">
+            <button type="button" class="btn" @click="page_nav_clicked"
+              v-bind:class="{'btn-dark': current_block_index != number-1, 'btn-secondary': current_block_index == number-1}">
+              {{! number }}
+            </button>
           </li>
         </ul>
+      </div></div>
+
+      <div class="row"><div class="col">
+        <!-- 正文，使用表格做显示控制 -->
+        <table class="table table-dark" v-if="is_book_loaded">
+          <h5>{{! current_book_chapter_name }}</h5>
+          <tbody>
+            <tr v-show="index == current_book_chapter_index" v-for="(chapter, index) in book_chapters">
+              <td v-show="current_block_index == block_index" v-for="(block, block_index) in chapter.line_blocks">
+                <p v-for="line in block">
+                  {{! line }}
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div></div>
+
+      <!-- 下部chapter页导航 -->
+      <div class="row"><div class="col">
+        <!-- <ul class="pagination justify-content-center" v-if="is_book_loaded">
+          <li class="page-item">
+            <button type="button" class="btn btn-dark" :class="{'disabled': current_block_index == 0}">&lt;</button>
+          </li> -->
+          <li class="page-item" v-for="number in page_numbers">
+            <button type="button" class="btn" @click="page_nav_clicked"
+              v-bind:class="{'btn-dark': current_block_index != number-1, 'btn-secondary': current_block_index == number-1}">
+              {{! number }}
+            </button>
+          </li>
+        </ul>
+      </div></div>
+
     </div>
-  </div></div>
 
-  <!-- 上部chapter页导航 -->
-  <ul class="pagination justify-content-center" v-if="is_book_loaded">
-    <li class="page-item" v-for="index in book_chapters[current_book_chapter_index]['line_blocks'].length">
-      <button type="button" class="btn btn-dark" @click="current_block_index = index-1">{{! index }}</button>
-    </li>
-  </ul>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="/static/js/popper/popper.min.js" crossorigin="anonymous"></script>
+    <script src="/static/js/bootstrap/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="/static/js/vue/vue.js"></script>
 
-    <!-- 正文，使用表格做显示控制 -->
-    <table class="table table-dark" v-if="is_book_loaded">
-      <h5>{{! current_book_chapter_name }}</h5>
-      <tbody>
-        <tr v-show="index == current_book_chapter_index" v-for="(chapter, index) in book_chapters">
-          <td v-show="current_block_index == block_index" v-for="(block, block_index) in chapter.line_blocks">
-            <p v-for="line in block">
-              {{! line }}
-            </p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- 下部chapter页导航 -->
-    <ul class="pagination justify-content-center" v-if="is_book_loaded">
-      <li class="page-item" v-for="index in book_chapters[current_book_chapter_index]['line_blocks'].length">
-        <button type="button" class="btn btn-dark" @click="current_block_index = index-1">{{! index }}</button>
-      </li>
-    </ul>
-
-  </div>
-
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="/static/js/jquery/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
-  <script src="/static/js/popper/popper.min.js" crossorigin="anonymous"></script>
-  <script src="/static/js/bootstrap/bootstrap.min.js" crossorigin="anonymous"></script>
-  <script src="/static/js/vue/vue.js"></script>
-
-  <script src="/static/js/books.js"></script>
+    <script src="/static/js/books.js"></script>
 
   </body>
 </html>
