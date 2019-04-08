@@ -75,14 +75,14 @@
   </div></div>
 
   <!-- 上部chapter页导航 -->
-  <ul class="pagination justify-content-center" v-if="current_book_chapter_name != ''">
+  <ul class="pagination justify-content-center" v-if="is_book_loaded">
     <li class="page-item" v-for="index in book_chapters[current_book_chapter_index]['line_blocks'].length">
       <button type="button" class="btn btn-dark" @click="current_block_index = index-1">{{! index }}</button>
     </li>
   </ul>
 
     <!-- 正文，使用表格做显示控制 -->
-    <table class="table table-dark" v-if="current_book_chapter_name != ''">
+    <table class="table table-dark" v-if="is_book_loaded">
       <h5>{{! current_book_chapter_name }}</h5>
       <tbody>
         <tr v-show="index == current_book_chapter_index" v-for="(chapter, index) in book_chapters">
@@ -96,7 +96,7 @@
     </table>
 
     <!-- 下部chapter页导航 -->
-    <ul class="pagination justify-content-center" v-if="current_book_chapter_name != ''">
+    <ul class="pagination justify-content-center" v-if="is_book_loaded">
       <li class="page-item" v-for="index in book_chapters[current_book_chapter_index]['line_blocks'].length">
         <button type="button" class="btn btn-dark" @click="current_block_index = index-1">{{! index }}</button>
       </li>

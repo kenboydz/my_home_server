@@ -8,6 +8,7 @@ let book_display = new Vue({
     el: "#book_display",
     data: {
         book_names: [],
+        is_book_loaded: false,  // 标志当前图书是否已经加载
         current_book_name: "",
         current_book_chapter_name: "",
         current_book_chapter_index: 0,
@@ -103,6 +104,7 @@ let book_display = new Vue({
                 book_display.book_info = book.book_info;
                 book_display.book_struct = book.book_struct;
                 book_display.book_chapters = book.book_chapters;
+                book_display.is_book_loaded = true;
             };
 
             let book_name = event.target.innerText;
@@ -136,6 +138,11 @@ let book_display = new Vue({
                     dump_into_cache(book_name, data_dict);
                     load_from_cache(book_name);
                 });
+            }
+        },
+        page_items: function(event) {
+            if (this.is_book_loaded) {
+                let all_pages = this.book_chapters[current_book_chapter_index]['line_blocks'].length;
             }
         }
     }
