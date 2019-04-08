@@ -58,21 +58,20 @@
 
   <!-- 书信息结构导航部分 -->
   <div class="row" v-show="current_book_name != ''"><div class="col">
-    <div class="row"><div class="col">
-      <button type="button" class="btn btn-dark" data-toggle="collapse"
-        data-target="#book_info">{{! book_info.title }}</button>
-      <div id="book_info" class="collapse show">
-        <ul  v-for="part in book_struct">
-            <li>{{! part.part_name }}
-              <ul v-for="(chapter_name, index) in part.chapter_names" :key="index">
-                <li><button type="button" class="btn btn-dark"
-                      @click="current_book_chapter_index = index; current_book_chapter_name = chapter_name">
-                      {{! chapter_name }}
-                </button></li>
-              </ul>
-            </li>
-          </ul>
-      </div>
+    <button type="button" class="btn btn-dark" data-toggle="collapse"
+      data-target="#book_info">{{! book_info.title }}</button>
+    <div id="book_info" class="collapse show">
+      <ul  v-for="part in book_struct">
+          <li>{{! part.part_name }}
+            <ul v-for="(chapter_name, index) in part.chapter_names" :key="index">
+              <li><button type="button" class="btn btn-dark"
+                    @click="current_book_chapter_index = index; current_book_chapter_name = chapter_name">
+                    {{! chapter_name }}
+              </button></li>
+            </ul>
+          </li>
+        </ul>
+    </div>
   </div></div>
 
     <!-- 正文，使用表格做显示控制 -->
