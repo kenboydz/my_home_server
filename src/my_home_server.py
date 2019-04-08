@@ -16,7 +16,7 @@ import tools
 
 
 # 软件信息
-SOFT_VERSION = "0.2.0"
+SOFT_VERSION = "0.2.1"
 
 # cookie 过期时间，会根据登陆者不同而做调整，单位 天
 cookie_expires = 1
