@@ -63,10 +63,10 @@
     <div id="book_info" class="collapse show">
       <ul  v-for="part in book_struct">
           <li>{{! part.part_name }}
-            <ul v-for="(chapter_name, index) in part.chapter_names" :key="index">
+            <ul v-for="chapter in part.chapter_names">
               <li><button type="button" class="btn btn-dark"
-                    @click="current_book_chapter_index = index; current_book_chapter_name = chapter_name">
-                    {{! chapter_name }}
+                    @click="current_book_chapter_index = chapter.index; current_book_chapter_name = chapter.name">
+                    {{! chapter.name }}
               </button></li>
             </ul>
           </li>
@@ -75,7 +75,7 @@
   </div></div>
 
     <!-- 正文，使用表格做显示控制 -->
-    <table class="table table-dark" v-if="book_chapters.length > 0">
+    <table class="table table-dark" v-if="current_book_chapter_name != ''">
       <thead>
         <tr><td>
           {{! current_book_chapter_name }}
