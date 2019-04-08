@@ -41,50 +41,39 @@
     <!-- 文章显示部分 -->
     <div class="container-fluid text-light bg-dark" id="book_display">
 
-      <!-- 书目导航部分 -->
-      <div class="row"><div class="col">
-        <button type="button" class="btn btn-dark" data-toggle="collapse"
-          data-target="#book_store">Book Menu</button>
-        <div id="book_store" class="collapse">
-          <!-- 书目列表 -->
-          <ul>
-            <li v-for="book_name in book_names">
-              <button type="button" class="btn btn-dark" 
-                @click="load_book">{{! book_name }}</button>
-            </li>
-          </ul>
-        </div>
-      </div></div>
-
-      <!-- 书信息结构导航部分 -->
-      <div class="row" v-show="current_book_name != ''"><div class="col">
-        <button type="button" class="btn btn-dark" data-toggle="collapse"
-          data-target="#book_info"><h4>{{! book_info.title }}</h4></button>
-        <div id="book_info" class="collapse show">
-          <ul  v-for="part in book_struct">
-              <li>{{! part.part_name }}
-                <ul v-for="chapter in part.chapter_names">
-                  <li><button type="button" class="btn btn-dark" :chapter-index="chapter.index"
-                        :chapter-name="chapter.name" @click="chapter_selected">
-                        {{! chapter.name }}
-                  </button></li>
-                </ul>
+      <div class="row">
+        <!-- 书目导航部分 -->
+        <div class="col">
+          <button type="button" class="btn btn-dark" data-toggle="collapse"
+            data-target="#book_store">Book Menu</button>
+          <div id="book_store" class="collapse">
+            <!-- 书目列表 -->
+            <ul>
+              <li v-for="book_name in book_names">
+                <button type="button" class="btn btn-dark" 
+                  @click="load_book">{{! book_name }}</button>
               </li>
             </ul>
+          </div>
         </div>
-      </div></div>
-
-        <!-- 上部chapter页导航 -->
-      <div class="row"><div class="col">
-        <ul class="pagination justify-content-center" v-if="is_book_loaded">
-          <li class="page-item" v-for="number in page_numbers">
-            <button type="button" class="btn" @click="page_nav_clicked"
-              v-bind:class="{'btn-dark': current_block_index != number-1, 'btn-secondary': current_block_index == number-1}">
-              {{! number }}
-            </button>
-          </li>
-        </ul>
-      </div></div>
+        <!-- 书信息结构导航部分 -->
+        <div class="col" v-show="current_book_name != ''">
+          <button type="button" class="btn btn-dark" data-toggle="collapse"
+            data-target="#book_info"><h4>{{! book_info.title }}</h4></button>
+          <div id="book_info" class="collapse show">
+            <ul  v-for="part in book_struct">
+                <li>{{! part.part_name }}
+                  <ul v-for="chapter in part.chapter_names">
+                    <li><button type="button" class="btn btn-dark" :chapter-index="chapter.index"
+                          :chapter-name="chapter.name" @click="chapter_selected">
+                          {{! chapter.name }}
+                    </button></li>
+                  </ul>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
 
       <div class="row"><div class="col">
         <!-- 正文，使用表格做显示控制 -->
