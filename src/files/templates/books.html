@@ -41,15 +41,16 @@
   <!-- 文章显示部分 -->
   <div class="container text-light bg-dark" id="book_display">
 
-  <!-- 文章导航部分 -->
+  <!-- 书目导航部分 -->
   <div class="row"><div class="col">
     <button type="button" class="btn btn-dark" data-toggle="collapse"
-      data-target="#book_store">书目</button>
+      data-target="#book_store">Book Menu</button>
     <div id="book_store" class="collapse">
       <!-- 书目列表 -->
       <ul>
         <li v-for="book_name in book_names">
-          <button type="button" class="btn btn-dark" @click="load_book">{{! book_name }}</button>
+          <button type="button" class="btn btn-dark" 
+            @click="load_book">{{! book_name }}</button>
         </li>
       </ul>
     </div>
@@ -57,21 +58,28 @@
 
   <!-- 书信息结构导航部分 -->
   <div class="row" v-show="current_book_name != ''"><div class="col">
-    <h3>{{! book_info.title }}</h3>
-    <ul  v-for="part in book_struct">
-      <li>{{! part.part_name }}
-        <ul v-for="(chapter_name, index) in part.chapter_names" :key="index">
-          <li><button type="button" class="btn btn-dark" @click="current_book_chapter_index = index">{{! chapter_name }}</button></li>
-        </ul>
-      </li>
-    </ul>
+    <div class="row"><div class="col">
+      <button type="button" class="btn btn-dark" data-toggle="collapse"
+        data-target="#book_info">{{! book_info.title }}</button>
+      <div id="book_info" class="collapse show">
+        <ul  v-for="part in book_struct">
+            <li>{{! part.part_name }}
+              <ul v-for="(chapter_name, index) in part.chapter_names" :key="index">
+                <li><button type="button" class="btn btn-dark"
+                      @click="current_book_chapter_index = index; current_book_chapter_name = chapter_name">
+                      {{! chapter_name }}
+                </button></li>
+              </ul>
+            </li>
+          </ul>
+      </div>
   </div></div>
 
     <!-- 正文，使用表格做显示控制 -->
     <table class="table table-dark" v-if="book_chapters.length > 0">
       <thead>
         <tr><td>
-          {{! book_info.title }}
+          {{! current_book_chapter_name }}
         </td></tr>
       </thead>
       <tbody>
