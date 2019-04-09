@@ -141,12 +141,12 @@ let book_display = new Vue({
                     load_from_cache(book_name);
                 });
             }
-            $('#book_store').removeClass('show');  // 关闭折叠
         },
         chapter_selected: function(event) {
             this.current_book_chapter_index = event.target.attributes['chapter-index'].value;
             this.current_book_chapter_name = event.target.attributes['chapter-name'].value;
             this.current_block_index = 0;
+            $('#book_store').removeClass('show');  // 关闭折叠
             $('#book_info').removeClass('show');  // 关闭折叠
         },
         page_numbers_calculate_: function() {
