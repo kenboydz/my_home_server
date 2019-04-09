@@ -101,7 +101,7 @@ class BookLoader:
         book_dict = self._reform_book_struct(book_dict)
         return book_dict
 
-    def load_book(self, book_name)->dict:
+    def _load_book(self, book_name)->dict:
         '''将 book_name 读到内存中
         '''
         book = self._load_book_from_cache(book_name)
@@ -110,6 +110,22 @@ class BookLoader:
             self._dump_book_into_cache(book_name, book)
         return book
 
+    def get_book_info(self, book_name)->dict:
+        '''获取 book_info 信息
+        '''
+        return self._load_book(book_name).get('info')
+
+    def get_book_struct(self, book_name)->list:
+        '''获取 book_struct 信息
+        '''
+        return self._load_book(book_name).get('struct')
+
+    def get_book_chapters(self, book_name)->list:
+        '''获取 book_struct 信息
+        '''
+        return self._load_book(book_name).get('chapters')
+        
+
     @property
     def book_names(self):
         return self._book_names
@@ -117,7 +133,7 @@ class BookLoader:
 
 def main():
     book_loader = BookLoader()
-    # book = book_loader.load_book(book_loader.book_names[0])
+    # book = book_loader._load_book(book_loader.book_names[0])
     # print(book['content'].keys())
     book_dict = book_loader._load_book_from_store(book_loader.book_names[0])
     print(book_dict['struct'])

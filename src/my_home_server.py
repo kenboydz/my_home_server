@@ -118,13 +118,13 @@ class BooksPageHandler(BaseHandler):
                 rst = {"book_names": book_loader.book_names}
                 self.write_json(rst)
             # 读取书内容
-            elif command == "load_book":
+            elif command == "load_book_struct":
                 book_name = self.param_args.get("book_name", None)
                 if book_name is None:
                     raise RuntimeError("获取书名参数失败")
-                book = book_loader.load_book(book_name)
-                if book is None:
-                    raise RuntimeError("获取《%s》内容失败" % book_name)
+                book = {'info': book_loader.get_book_info(book_name),
+                        'struct': book_loader.get_book_struct(book_name),
+                        'chapters': book_loader.get_book_chapters(book_name)}
                 rst = book
                 self.write_json(rst)
             else:

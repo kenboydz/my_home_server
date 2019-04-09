@@ -29,7 +29,7 @@ let book_display = new Vue({
                 book_display.book_names = data_dict.book_names;
             });
         },
-        load_book: async function(event) {
+        load_book_struct: async function(event) {
             // 读取小说内容
 
             let dump_into_cache = function(book_name, book_data) {
@@ -95,7 +95,7 @@ let book_display = new Vue({
                     'book_name': book_name,
                 };
                 const argments = {'param': JSON.stringify(param)};
-                $.getJSON("/books/load_book", argments, function(data_dict) {
+                $.getJSON("/books/load_book_struct", argments, function(data_dict) {
                     // data_dict 格式
                     // {
                     //     'info': {'title': xxx, 'author': xxx, 'language': xxx},
