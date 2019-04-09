@@ -64,9 +64,9 @@
           <ul  v-for="part in book_struct">
               <li>{{! part.part_name }}
                 <ul v-for="chapter in part.chapter_names">
-                  <li><button type="button" class="btn btn-dark" :chapter-index="chapter.index"
-                        :chapter-name="chapter.name" @click="chapter_selected">
-                        {{! chapter.name }}
+                  <li><button type="button" class="btn btn-dark" :chapter-index="chapter.chapter_index"
+                        :chapter-name="chapter.chapter_name" @click="chapter_selected">
+                        {{! chapter.chapter_name }}
                   </button></li>
                 </ul>
               </li>
@@ -92,7 +92,7 @@
           <h5>{{! current_book_chapter_name }}</h5>
           <tbody>
             <tr v-show="index == current_book_chapter_index" v-for="(chapter, index) in book_chapters">
-              <td v-show="current_block_index == block_index" v-for="(block, block_index) in chapter.line_blocks">
+              <td v-show="current_block_index == block_index" v-for="(block, block_index) in chapter.chapter_blocks">
                 <p v-for="line in block">
                   {{! line }}
                 </p>

@@ -15,8 +15,8 @@ let book_display = new Vue({
         current_block_index: 0,  // 每个 chapter 分开显示时的当前 index 值
         page_numbers: [],  // 当前 chapter 分页所需 page_numbers
         book_info: {},  // 格式 {'title': ..., ...}
-        book_struct: [],  // 格式 [{'part_name': xxx, 'chapter_names':  [{'name': 'chapter_name1', 'index': 0...}, ...], ...]
-        book_chapters: [],  // 格式 [{"name": xxx, "line_blocks": [[line0, line1,...], ...]},...]
+        book_struct: [],  // 格式 [{'part_name': xxx, 'chapter_names':  [{'chapter_name': 'chapter_name1', 'chapter_index': 0}, ...], ...]
+        book_chapters: [],  // 格式 [{"chapter_name": xxx, "chapter_blocks": [[line0, line1,...], ...]},...]
         book_cache: {}
     },
     mounted: function() {
@@ -34,66 +34,43 @@ let book_display = new Vue({
 
             let dump_into_cache = function(book_name, book_data) {
 
-                let parse_book_struct = function(book_data) {
-                    // 解析 book_struct
-                    // 格式为
-                    // 格式 [{'part_name': xxx, 'chapter_names':  [{'name': 'chapter_name1', 'index': 0...}, ...], ...]
-                    let book_struct = [];  // 清除 book_struct
-                    let chapter_index = 0;
-                    for (var part_key in book_data.content) {
-                        let part = book_data.content[part_key];
-                        let part_struct = {};
-                        part_struct['part_name'] = part_key;
-                        let chapter_names = [];
-                        for (var chapter_key in part) {
-                            chapter_names.push({'name': chapter_key, 'index': chapter_index});
-                            chapter_index += 1;
-                        }
-                        part_struct['chapter_names'] = chapter_names;
-                        book_struct.push(part_struct);
-                    }
-                    return book_struct;
-                };
-
-                let parse_book_chapters = function(book_data) {
-                    // 解析 book_chapters
-                    // 解析格式为
-                    // 格式 [{"name": xxx, "line_blocks": [[line0, line1,...], ...]},...]
-                    let book_chapters = [];  // 清除 book_chapters
-                    for (var part_key in book_data.content) {
-                        let part = book_data.content[part_key];
-                        // 构建 "line_blocks": [[line0, line1], [line2, line3], ...]
-                        for (var chapter_key in part) {
-                            let lines = part[chapter_key];
-                            let line_blocks = [];
-                            let line_block = [];
-                            let page_length = 0;
-                            for (var i in lines) {
-                                page_length += lines[i].length;
-                                if (page_length <= PAGE_LENGTH_MAX) {
-                                    line_block.push(lines[i]);
-                                } else {
-                                    line_blocks.push(line_block);
-                                    line_block = [];
-                                    line_block.push(lines[i]);
-                                    page_length = lines[i].length;
-                                }
+                let wrap_book_chapter_lines_into_blocks = function(chapters) {
+                    // 解析 chapters: [{'chapter_name': xxx, 'chapter_lines': [xxx, xxx, ...]}, ...]
+                    // 解析到格式为
+                    // 格式 [{"chapter_name": xxx, "chapter_blocks": [[line0, line1,...], ...]},...]
+                    let book_chapters = [];
+                    for (var i in chapters) {
+                        let chapter = chapters[i];
+                        let chapter_lines = chapter.chapter_lines;
+                        let chapter_blocks = [];
+                        let chapter_block = [];
+                        let page_length = 0;
+                        for (var j in chapter_lines) {
+                            let chapter_line = chapter_lines[j];
+                            page_length += chapter_line.length;
+                            if (page_length <= PAGE_LENGTH_MAX) {
+                                chapter_block.push(chapter_line);
+                            } else {
+                                chapter_blocks.push(chapter_block);
+                                chapter_block = [];
+                                chapter_block.push(chapter_line);
+                                page_length = chapter_line.length;
                             }
-                            line_blocks.push(line_block);  // 保存最后的 line_block
-                            let chapter = {'name': chapter_key,
-                                           'line_blocks': line_blocks};
-                            book_chapters.push(chapter);
                         }
+                        chapter_blocks.push(chapter_block);  // 保存最后的 chapter_block
+                        let new_chapter = {'chapter_name': chapter.chapter_name,
+                                           'chapter_blocks': chapter_blocks};
+                        book_chapters.push(new_chapter);
                     }
                     return book_chapters;
                 };
 
                 let book = {};
-                // 记录 book_info
+                // 记录 book_info 和 book_struct
                 book.book_info = book_data.info;
-                // 记录 book_struct 和 book_chapters
-                book.book_struct = parse_book_struct(book_data);
-                book.book_chapters = parse_book_chapters(book_data);
+                book.book_struct = book_data.struct;
+                // 记录并修改 book_chapters 到 blocks
+                book.book_chapters = wrap_book_chapter_lines_into_blocks(book_data.chapters);
                 // 保存到缓存
                 book_display.book_cache[book_name] = book;
             };
@@ -121,21 +98,11 @@ let book_display = new Vue({
                 $.getJSON("/books/load_book", argments, function(data_dict) {
                     // data_dict 格式
                     // {
-                    //     'info': {
-                    //         'title': xxx,
-                    //         'author': xxx,
-                    //         'language': xxx
-                    //     },
-                    //     'content': {
-                    //         'part name 01': {
-                    //             'chapter name 01': xxx,
-                    //             'chapter name 02': xxx
-                    //         },
-                    //         'part name 02': {
-                    //             'chapter name 03': xxx,
-                    //             'chapter name 04': xxx
-                    //         }
-                    //     }
+                    //     'info': {'title': xxx, 'author': xxx, 'language': xxx},
+                    //     'struct': [{'part_name': xxx,
+                    //                 'chapter_names': [{'chapter_name': xxx, 'chapter_index': xxx}, ...]},
+                    //             ...],
+                    //     'chapters': [{'chapter_name': xxx, 'chapter_lines': [xxx, xxx, ...]}, ...]
                     // }
                     dump_into_cache(book_name, data_dict);
                     load_from_cache(book_name);
@@ -153,7 +120,7 @@ let book_display = new Vue({
             if (!book_display.is_book_loaded) {
                 return;
             }
-            let max_index = book_display.book_chapters[book_display.current_book_chapter_index]['line_blocks'].length;
+            let max_index = book_display.book_chapters[book_display.current_book_chapter_index]['chapter_blocks'].length;
             const start_page = Math.max(1, Math.min(max_index-4, book_display.current_block_index - 1));
             const end_page = Math.min(max_index, start_page+4);
             book_display.page_numbers = [];

@@ -47,6 +47,47 @@ class BookLoader:
         '''
         self._book_cache[book_name] = book
 
+    def _split_chapter_into_list(self, chapter_content: str)->list:
+        '''将 chapter 根据段落拆分成 list
+        '''
+        content_list = re.split(r'[\r\n]+', chapter_content.strip())
+        return list(map(lambda x: x.strip(), content_list))
+
+    def _reform_book_struct(self, book_dict: dict)->dict:
+        '''对 book_dict 格式进行重新整理：
+
+        新格式：
+        {
+            'info': {'title': xxx, 'author': xxx, 'language': xxx},
+            'struct': [{'part_name': xxx,
+                        'chapter_names': [{'chapter_name': xxx, 'chapter_index': xxx}, ...]},
+                       ...],
+            'chapters': [{'chapter_name': xxx, 'chapter_lines': [xxx, xxx, ...]}, ...]
+        }
+        '''
+        new_book_dict = {}
+        # 'info' 合成
+        new_book_dict['info'] = book_dict['info']
+        # 'struct' 和 'chapters' 合成
+        new_book_dict['struct'] = []
+        new_book_dict['chapters'] = []
+        parts = book_dict['content']
+        chapter_index = 0
+        for part_name, chapter in parts.items():
+            chapter_names = []
+            for chapter_name, chapter_content in chapter.items():
+                chapter_lines = self._split_chapter_into_list(chapter_content)
+                chapter = {'chapter_name': chapter_name,
+                           'chapter_lines': chapter_lines}
+                new_book_dict['chapters'].append(chapter)
+                chapter_name = {'chapter_name': chapter_name, 'chapter_index': chapter_index}
+                chapter_index += 1
+                chapter_names.append(chapter_name)
+            part = {'part_name': part_name,
+                    'chapter_names': chapter_names}
+            new_book_dict['struct'].append(part)
+        return new_book_dict
+
     def _load_book_from_store(self, book_name)->dict:
         '''从 book store 中读取 book
         '''
@@ -57,26 +98,8 @@ class BookLoader:
             "在 %s 上没有找到图书" % book_path
         with open(book_path, 'rb') as f:
             book_dict = pickle.load(f)
-        book_dict['content'] = self._split_chapter_content(book_dict['content'])
+        book_dict = self._reform_book_struct(book_dict)
         return book_dict
-
-    def _split_paragraph(self, chapter_content: str)->list:
-        '''将 chapter 根据段落拆分成 list
-        '''
-        content_list = re.split(r'[\r\n]+', chapter_content.strip())
-        return list(map(lambda x: x.strip(), content_list))
-
-    def _split_chapter_content(self, content: dict)->dict:
-        '''将 content/chapter 内容的段落放到 list 中
-
-        content: {'part_name': {'chapter_name': xxx, ...}, ...}
-        '''
-        content_copy = copy.deepcopy(content)
-        for part_name, chapters in content.items():
-            for chapter_name, chapter_content in chapters.items():
-                content_copy[part_name][chapter_name] = \
-                    self._split_paragraph(chapter_content)
-        return content_copy
 
     def load_book(self, book_name)->dict:
         '''将 book_name 读到内存中
@@ -94,10 +117,10 @@ class BookLoader:
 
 def main():
     book_loader = BookLoader()
-    book = book_loader.load_book(book_loader.book_names[0])
-    print(book['content'].keys())
-    book = book_loader.load_book(book_loader.book_names[0])
-    print(book['content'].keys())
+    # book = book_loader.load_book(book_loader.book_names[0])
+    # print(book['content'].keys())
+    book_dict = book_loader._load_book_from_store(book_loader.book_names[0])
+    print(book_dict['struct'])
 
 if __name__ == "__main__":
     main()

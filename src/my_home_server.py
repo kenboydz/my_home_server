@@ -16,7 +16,7 @@ import tools
 
 
 # 软件信息
-SOFT_VERSION = "0.2.1"
+SOFT_VERSION = "0.2.3"
 
 # cookie 过期时间，会根据登陆者不同而做调整，单位 天
 cookie_expires = 1
@@ -124,9 +124,8 @@ class BooksPageHandler(BaseHandler):
                     raise RuntimeError("获取书名参数失败")
                 book = book_loader.load_book(book_name)
                 if book is None:
-                    raise RuntimeError("获取书单内容失败")
-                rst = {"info": book['info'],
-                       "content": book['content']}
+                    raise RuntimeError("获取《%s》内容失败" % book_name)
+                rst = book
                 self.write_json(rst)
             else:
                 self.write_error(400)
