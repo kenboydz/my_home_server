@@ -114,11 +114,22 @@ class BooksPageHandler(BaseHandler):
             if command is None:
                 self.render("books.html")
             # 读取书目录
-            elif command == "read_book_names":
+            elif command == "load_book_names":
                 rst = {"book_names": book_loader.book_names}
                 self.write_json(rst)
+            elif command == 'load_book_info':
+                book_name = self.param_args.get("book_name", None)
+                if book_name is None:
+                    raise RuntimeError("获取书名参数失败")
+                rst = book_loader.get_book_info(book_name)
             # 读取书内容
             elif command == "load_book_struct":
+                book_name = self.param_args.get("book_name", None)
+                if book_name is None:
+                    raise RuntimeError("获取书名参数失败")
+                rst = book_loader.get_book_struct(book_name)
+                self.write_json(rst)
+            elif command == 'load_book_chapters':
                 book_name = self.param_args.get("book_name", None)
                 if book_name is None:
                     raise RuntimeError("获取书名参数失败")

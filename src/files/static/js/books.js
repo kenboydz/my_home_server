@@ -14,22 +14,46 @@ let book_display = new Vue({
         current_book_chapter_index: 0,
         current_block_index: 0,  // 每个 chapter 分开显示时的当前 index 值
         page_numbers: [],  // 当前 chapter 分页所需 page_numbers
+
         book_info: {},  // 格式 {'title': ..., ...}
         book_struct: [],  // 格式 [{'part_name': xxx, 'chapter_names':  [{'chapter_name': 'chapter_name1', 'chapter_index': 0}, ...], ...]
         book_chapters: [],  // 格式 [{"chapter_name": xxx, "chapter_blocks": [[line0, line1,...], ...]},...]
-        book_cache: {}
+
+        book_info_cache: {},
+        book_struct_cache: {},
+        book_chapters_cache: {}
     },
     mounted: function() {
-        this.read_book_names();
+        this.load_book_names();
     },
     methods: {
-        read_book_names: async function(event) {
-            // 读取小说目录
-            $.getJSON("/books/read_book_names", function(data_dict) {
+        load_book_names: async function() {
+            // 读取 book names
+            $.getJSON("/books/load_book_names", function(data_dict) {
                 book_display.book_names = data_dict.book_names;
             });
         },
         load_book_struct: async function(event) {
+            // 读取 book struct
+            // 格式
+            // [{'part_name': xxx,
+            //   'chapter_names': [{'chapter_name': xxx, 'chapter_index': xxx}, ...]},
+            // ...],
+            let book_name = event.target.innerText;
+            if (book_name in book_display.book_struct_cache) {
+                book_display.book_struct = book_display.book_struct_cache[book_name].book_struct;
+            } else {
+                const param = {
+                    'book_name': book_name,
+                };
+                const argments = {'param': JSON.stringify(param)};
+                $.getJSON("/books/load_book_struct", function(book_struct) {
+                    book_display.book_struct = book_struct;
+                    book_display.book_struct_cache[book_name].book_struct = book_struct;
+                });
+            }
+        },
+        load_book_chapters: async function(event) {
             // 读取小说内容
 
             let dump_into_cache = function(book_name, book_data) {
@@ -72,12 +96,12 @@ let book_display = new Vue({
                 // 记录并修改 book_chapters 到 blocks
                 book.book_chapters = wrap_book_chapter_lines_into_blocks(book_data.chapters);
                 // 保存到缓存
-                book_display.book_cache[book_name] = book;
+                book_display.book_chapters_cache[book_name] = book;
             };
 
             let load_from_cache = function(book_name) {
                 // 从缓存区装载
-                let book = book_display.book_cache[book_name];
+                let book = book_display.book_chapters_cache[book_name];
                 book_display.current_book_name = book_name;
                 book_display.book_info = book.book_info;
                 book_display.book_struct = book.book_struct;
@@ -87,7 +111,7 @@ let book_display = new Vue({
             };
 
             let book_name = event.target.innerText;
-            if (book_name in book_display.book_cache) {
+            if (book_name in book_display.book_chapters_cache) {
                 load_from_cache(book_name);
             } else {
                 // 从服务器读取小说到缓存区
@@ -95,7 +119,7 @@ let book_display = new Vue({
                     'book_name': book_name,
                 };
                 const argments = {'param': JSON.stringify(param)};
-                $.getJSON("/books/load_book_struct", argments, function(data_dict) {
+                $.getJSON("/books/load_book_chapters", argments, function(data_dict) {
                     // data_dict 格式
                     // {
                     //     'info': {'title': xxx, 'author': xxx, 'language': xxx},
