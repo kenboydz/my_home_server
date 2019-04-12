@@ -3,8 +3,8 @@
   
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Motor Monitor by dz" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Deng Zhe Home Server" />
     <meta name="author" content="Deng Zhe" />
     <link rel="icon" href="/static/favicon.ico" />
     
@@ -50,14 +50,14 @@
           <ul>
             <li v-for="book_name in book_names">
               <button type="button" class="btn btn-dark" 
-                @click="load_book_chapters">{{! book_name }}</button>
+                @click="load_book_info_n_struct">{{! book_name }}</button>
             </li>
           </ul>
         </div>
       </div></div>
 
       <!-- 书信息结构导航部分 -->
-      <div class="row" v-show="current_book_name != ''"><div class="col">
+      <div class="row" v-show="book_struct.length != 0"><div class="col">
         <button type="button" class="btn btn-dark" data-toggle="collapse"
           data-target="#book_info"><h4>{{! book_info.title }}</h4></button>
         <div id="book_info" class="collapse show">

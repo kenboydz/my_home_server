@@ -27,31 +27,49 @@ let book_display = new Vue({
         this.load_book_names();
     },
     methods: {
-        load_book_names: async function() {
+        load_book_names: function() {
             // 读取 book names
             $.getJSON("/books/load_book_names", function(data_dict) {
                 book_display.book_names = data_dict.book_names;
             });
         },
-        load_book_struct: async function(event) {
+        load_book_info_n_struct: function(event) {
+            this.load_book_info(event);
+            this.load_book_struct(event);
+        },
+        load_book_info: function(event) {
+            // 读取 book info
+            // 格式
+            // {'title': ..., ...}
+            let book_name = event.target.innerText;
+            if (!(book_name in book_display.book_info_cache)) {
+                const param = {
+                    'book_name': book_name,
+                };
+                const argments = {'param': JSON.stringify(param)};
+                $.getJSON("/books/load_book_info", argments, function(book_info) {
+                    book_display.book_info_cache[book_name] = book_info;
+                });
+            }
+            book_display.book_info = book_display.book_info_cache[book_name];
+        },
+        load_book_struct: function(event) {
             // 读取 book struct
             // 格式
             // [{'part_name': xxx,
             //   'chapter_names': [{'chapter_name': xxx, 'chapter_index': xxx}, ...]},
             // ...],
             let book_name = event.target.innerText;
-            if (book_name in book_display.book_struct_cache) {
-                book_display.book_struct = book_display.book_struct_cache[book_name].book_struct;
-            } else {
+            if (!(book_name in book_display.book_struct_cache)) {
                 const param = {
                     'book_name': book_name,
                 };
                 const argments = {'param': JSON.stringify(param)};
-                $.getJSON("/books/load_book_struct", function(book_struct) {
-                    book_display.book_struct = book_struct;
-                    book_display.book_struct_cache[book_name].book_struct = book_struct;
+                $.getJSON("/books/load_book_struct", argments, function(book_struct) {
+                    book_display.book_struct_cache[book_name] = book_struct;
                 });
             }
+            book_display.book_struct = book_display.book_struct_cache[book_name];
         },
         load_book_chapters: async function(event) {
             // 读取小说内容

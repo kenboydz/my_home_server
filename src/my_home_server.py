@@ -122,6 +122,7 @@ class BooksPageHandler(BaseHandler):
                 if book_name is None:
                     raise RuntimeError("获取书名参数失败")
                 rst = book_loader.get_book_info(book_name)
+                self.write_json(rst)
             # 读取书内容
             elif command == "load_book_struct":
                 book_name = self.param_args.get("book_name", None)
@@ -144,6 +145,13 @@ class BooksPageHandler(BaseHandler):
             self.write_error(500)
 
 
+class TestPageHandler(BaseHandler):
+    '''测试页面
+    '''
+    
+    def get(self, *args):
+        self.render("test_page.html")
+
 
 define("port", default="8888", type=int,
        help="port of service connecting, default is 8888")
@@ -161,10 +169,10 @@ def make_server():
     }
     return tornado.web.Application([
         (r"/", IndexPageHandler),
+        (r"/test", TestPageHandler),
+        (r"/test/(.*)", TestPageHandler),
         (r"/books", BooksPageHandler),
         (r"/books/(.*)", BooksPageHandler),
-        #(r"/sign", SignPageHandler),
-        #(r"/sign/(.*)", SignPageHandler),
         (r"/.*", BaseHandler),
         #(r"/.*", tornado.web.RedirectHandler, dict(url=r"monitor.html", permanent=False)),
     ],
