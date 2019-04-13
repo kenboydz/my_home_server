@@ -2,10 +2,11 @@
 */
 'use strict';  // 严格模式，变量使用前需要先声明、无法删除变量等
 
+// 分页功能模板
 Vue.component('my-pagination', {
     data: function () {
       return {
-        count: 0
+          current: 0
       }
     },
     props: ['all', 'current'],
@@ -51,4 +52,20 @@ Vue.component('my-pagination', {
             return numbers;
        }
     }
-  });
+});
+
+
+// 书内容显示功能模板
+Vue.component('book-display', {
+    data: function () {
+      return {
+          content: 'fjlsafjl'
+      }
+    },
+    props: ['current'],
+    template: `
+        <div>
+            {{content}}
+        </div>
+    `
+})
