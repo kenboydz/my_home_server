@@ -1,27 +1,28 @@
 <template>
   <div id="app">
-    <BaseButton text="button"/>
+      <el-container>
+        <el-header>
+          <TheNavbar />
+        </el-header>
+        <el-main>
+          <BaseButton text="button"/>
+        </el-main>
+      </el-container>
   </div>
 </template>
 
 <script>
 import BaseButton from './components/BaseButton.vue'
+import TheNavbar from './components/TheNavbar.vue'
 
 export default {
   name: 'app',
   components: {
-    BaseButton
+    BaseButton,
+    TheNavbar
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>

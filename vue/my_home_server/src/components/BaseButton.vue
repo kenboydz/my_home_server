@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="btn btn-dark">{{ text }}</button>
+  <el-button type="info">信息按钮</el-button>
 </template>
 
 <script>
