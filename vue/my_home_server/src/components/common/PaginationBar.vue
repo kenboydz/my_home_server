@@ -9,7 +9,12 @@
 
 <script>
 export default {
-  name: 'PaginationBar'
+  name: 'PaginationBar',
+  methods: {
+    linkGen(pageNum) {
+      return pageNum === 1 ? '?' : `?page=${pageNum}`
+    }
+  }
 }
 </script>
 
