@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'BookMain',
+  name: 'BookDisplayChapterPage',
   props: {
     chapterPageContent: String
   },

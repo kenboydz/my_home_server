@@ -29,7 +29,7 @@ import BookDisplayChapterPage from './BookDisplayChapterPage.vue'
 import PaginationBar from '../common/PaginationBar.vue'
 
 export default {
-  name: 'BookMain',
+  name: 'BookDisplayChapter',
   components: {
     BookDisplayChapterPage,
     PaginationBar
@@ -39,12 +39,15 @@ export default {
   },
   data: function () {
     return {
-      page_index: 1
+      page_index: 0
     }
   },
   computed: {
+    chapterPages: function() {
+      return this.chapterContent.split("");
+    },
     chapterPageContent: function() {
-      return this.chapterContent;
+      return this.chapterPages[this.page_index];
     }
   }
 
