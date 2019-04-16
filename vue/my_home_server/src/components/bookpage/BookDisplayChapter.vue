@@ -8,6 +8,7 @@
             v-model="currentPage"
             :total-rows="totalPages"
             per-page="1"
+            hide-ellipsis
             align="center"
             size="sm"
           ></b-pagination>
@@ -52,7 +53,6 @@ export default {
       return this.chapterPages.length;
     }
   }
-
 }
 </script>
 
