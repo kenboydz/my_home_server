@@ -1,27 +1,42 @@
 <template>
 
-    <div class="row"><div class="col">
-      <p v-for="i in 50" :key="i">
-        {{i}}
-      </p>
-    </div></div>
+  <b-container class="text-light bg-dark">
+    <b-row align-v="start">
+      <b-col>
+        <pagination-bar />
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <p v-for="i in 50" :key="i">
+          {{i}}
+        </p>
+      </b-col>
+    </b-row>
+    <b-row align-v="end">
+      <b-col>
+        <pagination-bar />
+      </b-col>
+    </b-row>
+  </b-container>
 
 </template>
 
 
 <script>
 import PaginationBar from '../components/PaginationBar.vue'
-import TheBookNavbar from '../components/TheBookNavbar.vue'
 
 export default {
   name: 'TheBookMain',
   components: {
-    PaginationBar,
-    TheBookNavbar
+    PaginationBar
   }
 }
 </script>
 
 
 <style scoped>
+/* #the-book-main-container {
+  background-color: midnightblue;
+} */
 </style>

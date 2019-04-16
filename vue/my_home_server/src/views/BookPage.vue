@@ -1,27 +1,34 @@
 <template>
 
-  <div class="container">
+  <b-container>
 
-    <div class="row"><div class="col">
+    <b-row align-v="start"><b-col>
       <the-header />
-    </div></div>
+    </b-col></b-row>
 
-    <div class="row"><div class="col">
-      <the-book-main />
-    </div></div>
+    <b-row>
+      <b-col>
+        <the-book-navbar />
+      </b-col>
+      <b-col>
+        <the-book-main />
+      </b-col>
+    </b-row>
 
-  </div>
+  </b-container>
 
 </template>
 
 <script>
 import TheHeader from '../components/TheHeader.vue'
+import TheBookNavbar from '../components/TheBookNavbar.vue'
 import TheBookMain from '../components/TheBookMain.vue'
 
 export default {
   name: 'BookPage',
   components: {
     TheHeader,
+    TheBookNavbar,
     TheBookMain
   }
 }

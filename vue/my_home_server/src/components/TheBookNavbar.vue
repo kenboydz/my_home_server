@@ -1,25 +1,57 @@
 <template>
 
-  <el-menu
-    :default-active="pageActived"
-    mode="vertical"
-    @select="handleSelect"
-    background-color="#545c64"
-    text-color="#fff"
-    active-text-color="#ffd04b">
-    <el-submenu index="part1">
-      <template slot="title">Part1</template>
-      <el-menu-item index="part1-chapter1">Chapter1</el-menu-item>
-      <el-menu-item index="part1-chapter2">Chapter2</el-menu-item>
-      <el-menu-item index="part1-chapter3">Chapter3</el-menu-item>
-    </el-submenu>
-    <el-submenu index="part2">
-      <template slot="title">Part2</template>
-      <el-menu-item index="part2-chapter4">Chapter4</el-menu-item>
-      <el-menu-item index="part2-chapter5">Chapter5</el-menu-item>
-      <el-menu-item index="part2-chapter6">Chapter6</el-menu-item>
-    </el-submenu>
-  </el-menu>
+  <div role="tablist">
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block href="#" v-b-toggle.accordion-1 variant="dark">Part 1</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <b-list-group>
+            <b-list-group-item variant="dark" href="#">Chapter 1</b-list-group-item>
+            <b-list-group-item variant="dark" href="#" active>Chapter 2</b-list-group-item>
+            <b-list-group-item variant="dark" href="#">Chapter 3</b-list-group-item>
+            <b-list-group-item variant="dark" href="#">Chapter 4</b-list-group-item>
+            <b-list-group-item variant="dark" href="#">Chapter 5</b-list-group-item>
+          </b-list-group>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
+
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block href="#" v-b-toggle.accordion-2 variant="dark">Part 2</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <b-list-group>
+            <b-list-group-item variant="dark" href="#">Chapter 6</b-list-group-item>
+            <b-list-group-item variant="dark" href="#">Chapter 7</b-list-group-item>
+            <b-list-group-item variant="dark" href="#">Chapter 8</b-list-group-item>
+            <b-list-group-item variant="dark" href="#">Chapter 9</b-list-group-item>
+            <b-list-group-item variant="dark" href="#">Chapter 10</b-list-group-item>
+          </b-list-group>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
+
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block href="#" v-b-toggle.accordion-3 variant="dark">Part 3</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <b-list-group>
+            <b-list-group-item variant="dark" href="#">Chapter 11</b-list-group-item>
+            <b-list-group-item variant="dark" href="#">Chapter 12</b-list-group-item>
+            <b-list-group-item variant="dark" href="#">Chapter 13</b-list-group-item>
+            <b-list-group-item variant="dark" href="#">Chapter 14</b-list-group-item>
+            <b-list-group-item variant="dark" href="#">Chapter 15</b-list-group-item>
+          </b-list-group>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
+  </div>
 
 </template>
 
@@ -30,20 +62,12 @@ export default {
   name: 'TheBookNavbar',
   data() {
     return {
-      activeIndex: 'part1'
+      text: 'part1'
     };
-  },
-  methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    }
   }
 }
 </script>
 
 
 <style scoped>
-.el-menu {
-  width: 200px;
-}
 </style>

@@ -1,6 +1,5 @@
 <template>
 
-  <div>
     <b-navbar
       toggleable="md"
       type="dark"
@@ -16,6 +15,7 @@
         <b-navbar-nav>
           <b-nav-item-dropdown text="Book" right>
             <b-dropdown-item href="#">All</b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item href="#">EN</b-dropdown-item>
             <b-dropdown-item href="#">CN</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -23,7 +23,6 @@
       </b-collapse>
 
     </b-navbar>
-  </div>
 
 </template>
 
