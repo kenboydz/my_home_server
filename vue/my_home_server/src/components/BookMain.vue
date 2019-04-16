@@ -27,7 +27,7 @@
 import PaginationBar from '../components/PaginationBar.vue'
 
 export default {
-  name: 'TheBookMain',
+  name: 'BookMain',
   components: {
     PaginationBar
   }

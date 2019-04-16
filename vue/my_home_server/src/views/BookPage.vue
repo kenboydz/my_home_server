@@ -8,10 +8,10 @@
 
     <b-row>
       <b-col>
-        <the-book-navbar />
+        <book-navbar />
       </b-col>
       <b-col>
-        <the-book-main />
+        <book-main />
       </b-col>
     </b-row>
 
@@ -21,15 +21,15 @@
 
 <script>
 import TheHeader from '../components/TheHeader.vue'
-import TheBookNavbar from '../components/TheBookNavbar.vue'
-import TheBookMain from '../components/TheBookMain.vue'
+import BookNavbar from '../components/BookNavbar.vue'
+import BookMain from '../components/BookMain.vue'
 
 export default {
   name: 'BookPage',
   components: {
     TheHeader,
-    TheBookNavbar,
-    TheBookMain
+    BookNavbar,
+    BookMain
   }
 }
 </script>
