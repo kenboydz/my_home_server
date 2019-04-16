@@ -4,19 +4,19 @@
       <!-- 顶部分页 -->
       <b-row align-v="start">
         <b-col>
-          <pagination-bar />
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="totalPages"
+            per-page="1"
+            align="center"
+            size="sm"
+          ></b-pagination>
         </b-col>
       </b-row>
       <!-- chapter显示 -->
       <b-row>
         <b-col>
           <book-display-chapter-page :chapter-page-content="chapterPageContent" />
-        </b-col>
-      </b-row>
-      <!-- 底部分页 -->
-      <b-row align-v="end">
-        <b-col>
-          <pagination-bar />
         </b-col>
       </b-row>
   </b-container>
@@ -26,20 +26,18 @@
 
 <script>
 import BookDisplayChapterPage from './BookDisplayChapterPage.vue'
-import PaginationBar from '../common/PaginationBar.vue'
 
 export default {
   name: 'BookDisplayChapter',
   components: {
-    BookDisplayChapterPage,
-    PaginationBar
+    BookDisplayChapterPage
   },
   props: {
     chapterContent: String
   },
   data: function () {
     return {
-      page_index: 0
+      currentPage: 1
     }
   },
   computed: {
@@ -47,7 +45,11 @@ export default {
       return this.chapterContent.split("");
     },
     chapterPageContent: function() {
-      return this.chapterPages[this.page_index];
+      return this.chapterPages[this.currentPage-1];
+    },
+    totalPages: function() {
+      // 获取分页总数
+      return this.chapterPages.length;
     }
   }
 
