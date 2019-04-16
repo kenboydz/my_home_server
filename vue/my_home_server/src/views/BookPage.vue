@@ -1,11 +1,11 @@
 <template>
 
   <b-container>
-
+    <!-- 全局导航栏 -->
     <b-row align-v="start"><b-col>
       <the-header />
     </b-col></b-row>
-
+    <!-- book 显示 -->
     <b-row>
       <!-- 章节导航 -->
       <b-col>
@@ -22,7 +22,7 @@
         <!-- 内容显示 -->
         <b-row>
           <b-col>
-            <book-main />
+            <book-chapter-display chapter-content="fdsafjasl" />
           </b-col>
         </b-row>
         <!-- 底部分页 -->
@@ -32,9 +32,7 @@
           </b-col>
         </b-row>
       </b-col>
-
     </b-row>
-
   </b-container>
 
 </template>
@@ -42,7 +40,7 @@
 <script>
 import TheHeader from '../components/TheHeader.vue'
 import BookNavbar from '../components/BookNavbar.vue'
-import BookMain from '../components/BookMain.vue'
+import BookChapterDisplay from '../components/BookChapterDisplay.vue'
 import PaginationBar from '../components/PaginationBar.vue'
 
 export default {
@@ -50,7 +48,7 @@ export default {
   components: {
     TheHeader,
     BookNavbar,
-    BookMain,
+    BookChapterDisplay,
     PaginationBar
   }
 }

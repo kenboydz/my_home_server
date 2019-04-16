@@ -2,9 +2,7 @@
 
   <b-row>
     <b-col>
-      <p v-for="i in 50" :key="i">
-        {{i}}
-      </p>
+      {{ chapterContent }}
     </b-col>
   </b-row>
 
@@ -14,7 +12,10 @@
 <script>
 
 export default {
-  name: 'BookMain'
+  name: 'BookMain',
+  props: {
+    chapterContent: String
+  }
 }
 </script>
 

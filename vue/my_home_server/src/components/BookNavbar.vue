@@ -59,12 +59,7 @@
 <script>
 
 export default {
-  name: 'BookNavbar',
-  data() {
-    return {
-      text: 'part1'
-    };
-  }
+  name: 'BookNavbar'
 }
 </script>
 
