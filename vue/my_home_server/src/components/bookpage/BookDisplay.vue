@@ -7,24 +7,7 @@
     </b-col>
     <!-- chapter 显示 -->
     <b-col>
-      <!-- 顶部分页 -->
-      <b-row align-v="start">
-        <b-col>
-          <pagination-bar />
-        </b-col>
-      </b-row>
-      <!-- chapter显示 -->
-      <b-row>
-        <b-col>
-          <book-display-chapter :chapter-content="chapterContent" />
-        </b-col>
-      </b-row>
-      <!-- 底部分页 -->
-      <b-row align-v="end">
-        <b-col>
-          <pagination-bar />
-        </b-col>
-      </b-row>
+      <book-display-chapter :chapter-content="chapterContent" />
     </b-col>
   </b-row>
 
@@ -32,16 +15,14 @@
 
 
 <script>
-import BookDisplayChapter from './BookDisplayChapter.vue'
 import BookDisplayNavbar from './BookDisplayNavbar.vue'
-import PaginationBar from '../common/PaginationBar.vue'
+import BookDisplayChapter from './BookDisplayChapter.vue'
 
 export default {
   name: 'BookDisplay',
   components: {
-    BookDisplayChapter,
     BookDisplayNavbar,
-    PaginationBar
+    BookDisplayChapter
   },
   data: function () {
     return {
