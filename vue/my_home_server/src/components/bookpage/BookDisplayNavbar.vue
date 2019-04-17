@@ -1,9 +1,12 @@
 <template>
 
-  <div id="book-bar-float">
-    <div @click="showNavbar = !showNavbar" style="height:500px;width:500px;">
+  <div>
+    <div
+      id="book-bar-show-control"
+      @click="showNavbar = !showNavbar"
+    >
     </div>
-    <div v-show="showNavbar">
+    <div id="book-bar-float" v-show="showNavbar">
       <b-dropdown text="Go" class="m-md-2">
         <b-dropdown-item>Go1</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
@@ -84,8 +87,17 @@ export default {
 
 
 <style scoped>
-#book-bar-float {
+#book-bar-show-control {
   z-index: 9999;
+  position: fixed;
+  top: 200px;
+  left: 200px;
+  height: 500px;
+  width: 500px;
+}
+
+#book-bar-float {
+  z-index: 9998;
   position: fixed;
   top:0px;
   left:0px;
