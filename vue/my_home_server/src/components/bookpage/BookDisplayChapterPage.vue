@@ -12,8 +12,7 @@ export default {
   name: 'BookDisplayChapterPage',
   props: {
     chapterPageContent: String
-  },
-
+  }
 }
 </script>
 

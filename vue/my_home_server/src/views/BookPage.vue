@@ -1,6 +1,6 @@
 <template>
 
-  <b-container>
+  <b-container id="book-page-container" class="bg-secondary" fluid>
     <!-- 全局导航栏 -->
     <b-row align-v="start"><b-col>
       <the-header />

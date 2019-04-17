@@ -1,15 +1,14 @@
 <template>
 
     <b-navbar
-      toggleable="md"
+      toggleable="lg"
       type="dark"
       variant="dark"
-      fixed="top"
-      sticky="true">
+      >
 
       <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
 
-      <b-navbar-brand>Home</b-navbar-brand>
+      <b-navbar-brand href="#">Home</b-navbar-brand>
 
       <b-collapse id="nav-text-collapse" is-nav>
         <b-navbar-nav>

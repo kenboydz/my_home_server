@@ -1,26 +1,13 @@
 <template>
 
-  <b-container>
-      <!-- 顶部分页 -->
-      <b-row align-v="start">
-        <b-col>
-          <b-pagination
-            v-model="currentPage"
-            :total-rows="totalPages"
-            per-page="1"
-            hide-ellipsis
-            align="center"
-            size="sm"
-          ></b-pagination>
-        </b-col>
-      </b-row>
-      <!-- chapter显示 -->
-      <b-row>
-        <b-col>
-          <book-display-chapter-page :chapter-page-content="chapterPageContent" />
-        </b-col>
-      </b-row>
-  </b-container>
+  <div>
+    <!-- chapter显示 -->
+    <b-row>
+      <b-col>
+        <book-display-chapter-page :chapter-page-content="chapterPageContent" />
+      </b-col>
+    </b-row>
+  </div>
 
 </template>
 
@@ -34,23 +21,43 @@ export default {
     BookDisplayChapterPage
   },
   props: {
-    chapterContent: String
+    chapterContent: {
+      type: String,
+      default: ""
+    },
+    currentPage: {
+      type: Number,
+      default: 1
+    }
   },
   data: function () {
     return {
-      currentPage: 1
+      maxPage: 1,
+      chapterPages: []  // 将 chapterContent 分割成的多页
+    }
+  },
+  mounted: function() {
+    // this.windowHeight = window.innerHeight+"px";
+    this.update_chapter_content();
+  },
+  watch: {
+    chapterContent: function() {
+      this.update_chapter_content();
     }
   },
   computed: {
-    chapterPages: function() {
-      return this.chapterContent.split("");
-    },
     chapterPageContent: function() {
-      return this.chapterPages[this.currentPage-1];
-    },
-    totalPages: function() {
-      // 获取分页总数
-      return this.chapterPages.length;
+      const currentPage = Math.max(1, Math.min(this.maxPage, this.currentPage));
+      return this.chapterPages[currentPage-1];
+    }
+  },
+  methods: {
+    update_chapter_content: function() {
+      // 根据规则，将 chapterContent 分割成 list
+      this.chapterPages = this.chapterContent.split("");
+      // 向父组件返回最大页数值
+      this.maxPage = this.chapterPages.length;
+      this.$emit('update:max-page', this.maxPage);
     }
   }
 }

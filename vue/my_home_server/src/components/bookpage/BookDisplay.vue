@@ -1,15 +1,22 @@
 <template>
 
-  <b-row>
+  <div>
     <!-- 章节导航 -->
-    <b-col>
+    <div id="book-bar-float" v-show="false">
       <book-display-navbar />
-    </b-col>
-    <!-- chapter 显示 -->
-    <b-col>
-      <book-display-chapter :chapter-content="chapterContent" />
-    </b-col>
-  </b-row>
+    </div>
+    <b-row>
+      <!-- chapter 显示 -->
+      <b-col>
+        <book-display-chapter
+          :chapter-content="chapterContent"
+          :current-page="currentPage"
+          :max-page.sync="maxPage"
+        />
+      </b-col>
+      {{ maxPage }}
+    </b-row>
+  </div>
 
 </template>
 
@@ -26,7 +33,9 @@ export default {
   },
   data: function () {
     return {
-      chapterContent: `fjsklajflakvnalfwajrqw;`
+      chapterContent: `fjsklajflakvnalfwajrqw;`,
+      currentPage: 1,
+      maxPage: 1
     }
   }
 }
@@ -34,4 +43,8 @@ export default {
 
 
 <style scoped>
+#book-bar-float {
+  z-index: 9999;
+  position: fixed;
+}
 </style>

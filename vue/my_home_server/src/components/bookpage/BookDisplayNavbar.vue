@@ -1,7 +1,17 @@
 <template>
 
-  <div role="tablist">
-    <b-card no-body class="mb-1">
+  <div>
+    <b-dropdown text="Go" class="m-md-2">
+      <b-dropdown-item>Go1</b-dropdown-item>
+      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-item>Go2</b-dropdown-item>
+      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-item>Go3</b-dropdown-item>
+    </b-dropdown>
+  </div>
+
+  <!-- <div role="tablist">
+    <b-card no-body class="mb-1" bg-variant="dark" text-variant="white">
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button block href="#" v-b-toggle.accordion-1 variant="dark">Part 1</b-button>
       </b-card-header>
@@ -18,7 +28,7 @@
       </b-collapse>
     </b-card>
 
-    <b-card no-body class="mb-1">
+    <b-card no-body class="mb-1" bg-variant="dark" text-variant="white">
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button block href="#" v-b-toggle.accordion-2 variant="dark">Part 2</b-button>
       </b-card-header>
@@ -35,7 +45,7 @@
       </b-collapse>
     </b-card>
 
-    <b-card no-body class="mb-1">
+    <b-card no-body class="mb-1" bg-variant="dark" text-variant="white">
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button block href="#" v-b-toggle.accordion-3 variant="dark">Part 3</b-button>
       </b-card-header>
@@ -51,7 +61,7 @@
         </b-card-body>
       </b-collapse>
     </b-card>
-  </div>
+  </div> -->
 
 </template>
 
