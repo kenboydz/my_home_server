@@ -1,13 +1,17 @@
 <template>
 
-  <div>
-    <b-dropdown text="Go" class="m-md-2">
-      <b-dropdown-item>Go1</b-dropdown-item>
-      <b-dropdown-divider></b-dropdown-divider>
-      <b-dropdown-item>Go2</b-dropdown-item>
-      <b-dropdown-divider></b-dropdown-divider>
-      <b-dropdown-item>Go3</b-dropdown-item>
-    </b-dropdown>
+  <div id="book-bar-float">
+    <div @click="showNavbar = !showNavbar" style="height:500px;width:500px;">
+    </div>
+    <div v-show="showNavbar">
+      <b-dropdown text="Go" class="m-md-2">
+        <b-dropdown-item>Go1</b-dropdown-item>
+        <b-dropdown-divider></b-dropdown-divider>
+        <b-dropdown-item>Go2</b-dropdown-item>
+        <b-dropdown-divider></b-dropdown-divider>
+        <b-dropdown-item>Go3</b-dropdown-item>
+      </b-dropdown>
+    </div>
   </div>
 
   <!-- <div role="tablist">
@@ -69,10 +73,21 @@
 <script>
 
 export default {
-  name: 'BookNavbar'
+  name: 'BookNavbar',
+  data: function () {
+    return {
+      showNavbar: false
+    }
+  }
 }
 </script>
 
 
 <style scoped>
+#book-bar-float {
+  z-index: 9999;
+  position: fixed;
+  top:0px;
+  left:0px;
+}
 </style>

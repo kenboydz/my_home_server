@@ -1,8 +1,8 @@
 <template>
 
   <div>
-    <!-- 章节导航 -->
-    <div id="book-bar-float" v-show="false">
+    <!-- 导航 -->
+    <div>
       <book-display-navbar />
     </div>
     <b-row>
@@ -14,7 +14,6 @@
           @update:max-page="chapter.maxPage = $event"
         />
       </b-col>
-      {{ chapter.maxPage }}
     </b-row>
   </div>
 
@@ -45,8 +44,4 @@ export default {
 
 
 <style scoped>
-#book-bar-float {
-  z-index: 9999;
-  position: fixed;
-}
 </style>
