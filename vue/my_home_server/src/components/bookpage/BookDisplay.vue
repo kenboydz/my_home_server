@@ -9,12 +9,12 @@
       <!-- chapter 显示 -->
       <b-col>
         <book-display-chapter
-          :chapter-content="chapterContent"
-          :current-page="currentPage"
-          @update:max-page="maxPage = $event"
+          :chapter-content="chapter.chapterContent"
+          :current-page="chapter.currentPage"
+          @update:max-page="chapter.maxPage = $event"
         />
       </b-col>
-      {{ maxPage }}
+      {{ chapter.maxPage }}
     </b-row>
   </div>
 
@@ -33,9 +33,11 @@ export default {
   },
   data: function () {
     return {
-      chapterContent: `fjsklajflakvnalfwajrqw;`,
-      currentPage: 1,
-      maxPage: 1
+      chapter: {
+        chapterContent: `fjsklajflakvnalfwajrqw;`,
+        currentPage: 1,
+        maxPage: 1
+      }
     }
   }
 }
