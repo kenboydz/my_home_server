@@ -11,7 +11,7 @@
         <book-display-chapter
           :chapter-content="chapterContent"
           :current-page="currentPage"
-          :max-page.sync="maxPage"
+          @update:max-page="maxPage = $event"
         />
       </b-col>
       {{ maxPage }}
