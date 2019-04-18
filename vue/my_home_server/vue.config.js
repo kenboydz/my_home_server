@@ -1,3 +1,1 @@
-module.exports = {
-  assetsDir: 'static'
-}
+module.exports = {}
