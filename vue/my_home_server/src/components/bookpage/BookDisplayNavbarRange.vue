@@ -29,7 +29,6 @@ export default {
   },
   watch: {
     currentPageLocal: function() {
-      // this.$emit('update:current-page', parseInt(this.currentPageLocal));
       this.$emit('update:current-page', this.currentPageLocal);
     },
     currentPage: function() {
