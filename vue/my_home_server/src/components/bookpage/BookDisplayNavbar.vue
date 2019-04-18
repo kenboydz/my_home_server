@@ -6,8 +6,8 @@
     <div id="book-navbar-left_page_btn" @click="onTurnPage(false)"></div>
     <div id="book-navbar-right_page_btn" @click="onTurnPage(true)"></div>
     <!-- 悬浮显示控制菜单 -->
-    <div class="book-navbar-float" v-show="showNavbar">
-      <!-- 书记目录 -->
+    <div id="book-navbar-float" v-show="showNavbar">
+      <!-- 书籍目录 -->
       <BookDisplayNavbarMenu :book-menu="bookMenu" :current-chapter.sync="currentChapterLocal"/>
       <!-- 页码选择 -->
       <BookDisplayNavbarRange :max-page="maxPage" :current-page.sync="currentPageLocal"/>
@@ -93,40 +93,40 @@ export default {
 
 
 <style scoped>
-.book-navbar-float {
+#book-navbar-float {
   z-index: 1100;
   position: fixed;
-  top: 70vh;
+  top: 20vh;
   left: 0vh;
 }
 
 #book-navbar-show-btn {
   z-index: 1000;
   position: fixed;
-  top: 10vh;
+  top: 0vh;
   left: 35vw;
-  height: 80vh;
+  height: 100vh;
   width: 30vw;
-  border:blue solid;
+  /* border:blue solid; */
 }
 
 #book-navbar-left_page_btn {
   z-index: 1000;
   position: fixed;
-  top: 10vh;
+  top: 00vh;
   left: 0vw;
-  height: 80vh;
+  height: 100vh;
   width: 35vw;
-  border:red solid;
+  /* border:red solid; */
 }
 
 #book-navbar-right_page_btn {
   z-index: 1000;
   position: fixed;
-  top: 10vh;
+  top: 00vh;
   left: 65vw;
-  height: 80vh;
+  height: 100vh;
   width: 35vw;
-  border:red solid;
+  /* border:red solid; */
 }
 </style>

@@ -53,4 +53,7 @@ export default {
 
 
 <style scoped>
+#book-display-navbar-menu {
+  font-size: 3px;
+}
 </style>

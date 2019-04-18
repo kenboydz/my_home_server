@@ -1,10 +1,8 @@
 <template>
 
-  <b-container class="bg-secondary" fluid>
+  <b-container fluid>
     <!-- 全局导航栏 -->
-    <b-row align-v="start" v-show="showNavbar"><b-col>
-      <the-header />
-    </b-col></b-row>
+    <TheHeader id="the-header-display" v-show="showNavbar" />
     <!-- book 显示 -->
     <b-row><b-col>
       <!-- 书目导航 -->
@@ -58,4 +56,7 @@ export default {
 
 
 <style scoped>
+#the-header-display {
+  z-index: 2000;
+}
 </style>
