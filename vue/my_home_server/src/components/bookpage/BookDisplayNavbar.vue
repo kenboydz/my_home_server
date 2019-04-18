@@ -60,17 +60,21 @@ export default {
   data: function () {
     return {
       showNavbar: false,
-      currentChapterLocal: {partIndex: 1, chapterIndex: 11},
-      currentPageLocal: 1
+      currentChapterLocal: {partIndex: 1, chapterIndex: 11}
+    }
+  },
+  computed: {
+    currentPageLocal: {
+      get: function() {
+        return this.currentPage;
+      },
+      set: function(page) {
+        page = Math.max(1, Math.min(this.maxPage, page));
+        this.$emit('update:current-page', page);
+      }
     }
   },
   watch: {
-    currentPageLocal: function() {
-      this.$emit('update:current-page', this.currentPageLocal);
-    },
-    currentPage: function() {
-      this.currentPageLocal = this.currentPage;
-    },
     currentChapterLocal: function() {
       this.$emit('update:current-chapter', this.currentChapterLocal);
     },
@@ -91,7 +95,6 @@ export default {
       } else {
         this.currentPageLocal -= 1;
       }
-      this.currentPageLocal = Math.max(1, Math.min(this.maxPage, this.currentPageLocal));
     }
   }
 }
