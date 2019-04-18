@@ -1,9 +1,9 @@
 <template>
 
-  <b-container fluid>
+  <div>
     {{ currentPageLocal }} / {{ maxPage }}
-    <b-form-input v-model="currentPageLocal" type="range" min="1" :max="maxPage"></b-form-input>
-  </b-container>
+    <b-form-input v-model.number.lazy="currentPageLocal" type="range" min="1" :max="maxPage"></b-form-input>
+  </div>
 
 </template>
 
@@ -29,7 +29,8 @@ export default {
   },
   watch: {
     currentPageLocal: function() {
-      this.$emit('update:current-page', parseInt(this.currentPageLocal));
+      // this.$emit('update:current-page', parseInt(this.currentPageLocal));
+      this.$emit('update:current-page', this.currentPageLocal);
     },
     currentPage: function() {
       this.currentPageLocal = this.currentPage;

@@ -94,6 +94,11 @@ export default {
       currentPage: 1
     }
   },
+  watch: {
+    currentPage: function() {
+      this.$emit('update:current-page', this.currentPage);
+    }
+  },
   methods: {
     onToggleShow: function() {
       // 转换显示标志
@@ -108,7 +113,6 @@ export default {
         this.currentPage -= 1;
       }
       this.currentPage = Math.max(1, Math.min(this.maxPage, this.currentPage));
-      this.$emit('update:current-page', this.currentPage);
     }
   }
 }
