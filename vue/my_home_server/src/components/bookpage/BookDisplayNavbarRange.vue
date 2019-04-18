@@ -22,11 +22,6 @@ export default {
       default: 1
     }
   },
-  data: function () {
-    return {
-      // currentPageLocal: 1
-    }
-  },
   computed: {
     currentPageLocal: {
       get: function() {
