@@ -1,8 +1,20 @@
 <template>
 
   <div>
-    {{ currentPageLocal }} / {{ maxPage }}
-    <b-form-input v-model.number.lazy="currentPageLocal" type="range" min="1" :max="maxPage"></b-form-input>
+    <b-form-input id="book-display-nav-bar-range-page-show"
+      v-model.number.lazy="currentPageLocal"
+      type="range"
+      min="1"
+      :max="maxPage"
+      @change="onInputRangeChanged"
+    ></b-form-input>
+    <b-tooltip
+      ref="pageShowToolTips"
+      target="book-display-nav-bar-range-page-show"
+      placement="top"
+    >
+     {{ currentPageLocal }} / {{ maxPage }}
+    </b-tooltip>
   </div>
 
 </template>
@@ -11,7 +23,7 @@
 <script>
 
 export default {
-  name: 'BookNavbarRange',
+  name: 'BookDisplayNavbarRange',
   props: {
     currentPage: {
       type: Number,
@@ -30,6 +42,11 @@ export default {
       set: function(page) {
         this.$emit('update:current-page', page);
       }
+    }
+  },
+  methods: {
+    onInputRangeChanged: function() {
+      this.$refs.pageShowToolTips.$emit('open')
     }
   }
 }
