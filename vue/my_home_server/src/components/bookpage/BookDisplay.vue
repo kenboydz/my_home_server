@@ -3,15 +3,18 @@
   <div>
     <!-- 导航 -->
     <div>
-      <book-display-navbar />
+      <book-display-navbar
+        :max-page="maxPage"
+        @update:current-page="currentPage = $event"
+      />
     </div>
     <b-row>
       <!-- chapter 显示 -->
       <b-col>
         <book-display-chapter
-          :chapter-content="chapter.chapterContent"
-          :current-page="chapter.currentPage"
-          @update:max-page="chapter.maxPage = $event"
+          :chapter-content="chapterContent"
+          :current-page="currentPage"
+          @update:max-page="maxPage = $event"
         />
       </b-col>
     </b-row>
@@ -32,11 +35,9 @@ export default {
   },
   data: function () {
     return {
-      chapter: {
-        chapterContent: `fjsklajflakvnalfwajrqw;`,
-        currentPage: 1,
-        maxPage: 1
-      }
+      chapterContent: `fjsklajflakvnalfwajrqw;`,
+      currentPage: 1,
+      maxPage: 1
     }
   }
 }

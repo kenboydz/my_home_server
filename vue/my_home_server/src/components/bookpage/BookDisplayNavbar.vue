@@ -1,9 +1,9 @@
 <template>
 
   <div>
-    <div id="book-bar-show-btn" @click="showNavbar = !showNavbar"></div>
-    <div id="book-bar-left_page_btn" @click="showNavbar = !showNavbar"></div>
-    <div id="book-bar-right_page_btn" @click="showNavbar = !showNavbar"></div>
+    <div id="book-bar-show-btn" @click="onToggleShow"></div>
+    <div id="book-bar-left_page_btn" @click="onTurnPage(false)"></div>
+    <div id="book-bar-right_page_btn" @click="onTurnPage(true)"></div>
     <div id="book-bar-float" v-show="showNavbar">
       <b-dropdown text="Go" class="m-md-2">
         <b-dropdown-item>Go1</b-dropdown-item>
@@ -75,9 +75,33 @@
 
 export default {
   name: 'BookNavbar',
+  props: {
+    maxPage: {
+      type: Number,
+      default: 1
+    }
+  },
   data: function () {
     return {
-      showNavbar: false
+      showNavbar: false,
+      currentPage: 1
+    }
+  },
+  methods: {
+    onToggleShow: function() {
+      // 转换显示标志
+      this.showNavbar = !this.showNavbar;
+      this.$emit('update:show-navbar', this.showNavbar);
+    },
+    onTurnPage: function(toNextPage) {
+      // 翻页事件，默认翻到下一页
+      if (toNextPage) {
+        this.currentPage += 1;
+      } else {
+        this.currentPage -= 1;
+      }
+      this.currentPage = Math.max(1, Math.min(this.maxPage, this.currentPage));
+      this.$emit('update:current-page', this.currentPage);
     }
   }
 }
