@@ -1,21 +1,16 @@
 <template>
 
   <div>
+    <!-- 控制显示和翻页的透明按钮 -->
     <div id="book-navbar-show-btn" @click="onToggleShow"></div>
     <div id="book-navbar-left_page_btn" @click="onTurnPage(false)"></div>
     <div id="book-navbar-right_page_btn" @click="onTurnPage(true)"></div>
+    <!-- 悬浮显示控制菜单 -->
     <div class="book-navbar-float" v-show="showNavbar">
-      <b-dropdown text="Go" class="m-md-2">
-        <b-dropdown-item>Go1</b-dropdown-item>
-        <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item>Go2</b-dropdown-item>
-        <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item>Go3</b-dropdown-item>
-      </b-dropdown>
-    </div>
-    <div class="book-navbar-float" v-show="showNavbar">
-      <BookDisplayNavbarMenu :book-menu="bookMenu" :current-chapter.sync="currentChapter"/>
-      <BookDisplayNavbarRange :max-page="maxPage" :current-page.sync="currentPage"/>
+      <!-- 书记目录 -->
+      <BookDisplayNavbarMenu :book-menu="bookMenu" :current-chapter.sync="currentChapterLocal"/>
+      <!-- 页码选择 -->
+      <BookDisplayNavbarRange :max-page="maxPage" :current-page.sync="currentPageLocal"/>
     </div>
   </div>
 
@@ -37,21 +32,50 @@ export default {
       type: Number,
       default: 1
     },
+    currentPage: {
+      type: Number,
+      default: 1
+    },
     bookMenu: {
       type: Array,
-      default: []
+      default: function() {
+        return [];
+      }
+    },
+    currentChapter: {
+      type: Object,
+      default: function() {
+        return {partIndex: 1, chapterIndex: 11};
+      }
     }
+    // currentPartIndex: {
+    //   type: Number,
+    //   default: 1
+    // },
+    // currentChapterIndex: {
+    //   type: Number,
+    //   default: 11
+    // }
   },
   data: function () {
     return {
       showNavbar: false,
-      currentChapter: {partIndex: 1, chapterIndex: 12},
-      currentPage: 1
+      currentChapterLocal: {partIndex: 1, chapterIndex: 11},
+      currentPageLocal: 1
     }
   },
   watch: {
+    currentPageLocal: function() {
+      this.$emit('update:current-page', this.currentPageLocal);
+    },
     currentPage: function() {
-      this.$emit('update:current-page', this.currentPage);
+      this.currentPageLocal = this.currentPage;
+    },
+    currentChapterLocal: function() {
+      this.$emit('update:current-chapter', this.currentChapterLocal);
+    },
+    currentChapter: function() {
+      this.currentChapterLocal = this.currentChapter;
     }
   },
   methods: {
@@ -63,11 +87,11 @@ export default {
     onTurnPage: function(toNextPage) {
       // 翻页事件，默认翻到下一页
       if (toNextPage) {
-        this.currentPage += 1;
+        this.currentPageLocal += 1;
       } else {
-        this.currentPage -= 1;
+        this.currentPageLocal -= 1;
       }
-      this.currentPage = Math.max(1, Math.min(this.maxPage, this.currentPage));
+      this.currentPageLocal = Math.max(1, Math.min(this.maxPage, this.currentPageLocal));
     }
   }
 }

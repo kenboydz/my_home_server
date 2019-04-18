@@ -24,15 +24,17 @@ export default {
   },
   data: function () {
     return {
-      currentPageLocal: 1
+      // currentPageLocal: 1
     }
   },
-  watch: {
-    currentPageLocal: function() {
-      this.$emit('update:current-page', this.currentPageLocal);
-    },
-    currentPage: function() {
-      this.currentPageLocal = this.currentPage;
+  computed: {
+    currentPageLocal: {
+      get: function() {
+        return this.currentPage;
+      },
+      set: function(page) {
+        this.$emit('update:current-page', page);
+      }
     }
   }
 }
