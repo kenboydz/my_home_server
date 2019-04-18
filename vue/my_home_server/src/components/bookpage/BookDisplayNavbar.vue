@@ -1,11 +1,9 @@
 <template>
 
   <div>
-    <div
-      id="book-bar-show-control"
-      @click="showNavbar = !showNavbar"
-    >
-    </div>
+    <div id="book-bar-show-btn" @click="showNavbar = !showNavbar"></div>
+    <div id="book-bar-left_page_btn" @click="showNavbar = !showNavbar"></div>
+    <div id="book-bar-right_page_btn" @click="showNavbar = !showNavbar"></div>
     <div id="book-bar-float" v-show="showNavbar">
       <b-dropdown text="Go" class="m-md-2">
         <b-dropdown-item>Go1</b-dropdown-item>
@@ -87,19 +85,40 @@ export default {
 
 
 <style scoped>
-#book-bar-show-control {
-  z-index: 9999;
-  position: fixed;
-  top: 200px;
-  left: 200px;
-  height: 500px;
-  width: 500px;
-}
-
 #book-bar-float {
-  z-index: 9998;
+  z-index: 1000;
   position: fixed;
   top:0px;
   left:0px;
+}
+
+#book-bar-show-btn {
+  z-index: 1100;
+  position: fixed;
+  top: 0vh;
+  left: 35vw;
+  height: 100vh;
+  width: 30vw;
+  border:blue solid;
+}
+
+#book-bar-left_page_btn {
+  z-index: 1100;
+  position: fixed;
+  top: 0vh;
+  left: 0vw;
+  height: 100vh;
+  width: 35vw;
+  border:red solid;
+}
+
+#book-bar-right_page_btn {
+  z-index: 1100;
+  position: fixed;
+  top: 0vh;
+  left: 65vw;
+  height: 100vh;
+  width: 30vw;
+  border:red solid;
 }
 </style>

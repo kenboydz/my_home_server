@@ -1,8 +1,8 @@
 <template>
 
-  <b-container id="book-page-container" class="bg-secondary" fluid>
+  <b-container class="bg-secondary" fluid>
     <!-- 全局导航栏 -->
-    <b-row align-v="start"><b-col>
+    <b-row align-v="start" v-show="false"><b-col>
       <the-header />
     </b-col></b-row>
     <!-- book 显示 -->

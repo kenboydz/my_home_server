@@ -1,6 +1,6 @@
 <template>
 
-  <div class="text-light bg-dark">
+  <div id="book-display-chapter-page" class="text-light bg-dark">
     {{ chapterPageContent }}
   </div>
 
@@ -18,4 +18,8 @@ export default {
 
 
 <style scoped>
+#book-display-chapter-page {
+  z-index: -100;
+  height:100vh;
+}
 </style>
