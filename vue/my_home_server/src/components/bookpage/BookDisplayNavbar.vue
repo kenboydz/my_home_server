@@ -1,10 +1,10 @@
 <template>
 
   <div>
-    <div id="book-bar-show-btn" @click="onToggleShow"></div>
-    <div id="book-bar-left_page_btn" @click="onTurnPage(false)"></div>
-    <div id="book-bar-right_page_btn" @click="onTurnPage(true)"></div>
-    <div id="book-bar-float" v-show="showNavbar">
+    <div id="book-navbar-show-btn" @click="onToggleShow"></div>
+    <div id="book-navbar-left_page_btn" @click="onTurnPage(false)"></div>
+    <div id="book-navbar-right_page_btn" @click="onTurnPage(true)"></div>
+    <div class="book-navbar-float" v-show="showNavbar">
       <b-dropdown text="Go" class="m-md-2">
         <b-dropdown-item>Go1</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
@@ -12,6 +12,9 @@
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item>Go3</b-dropdown-item>
       </b-dropdown>
+    </div>
+    <div class="book-navbar-float" v-show="showNavbar">
+      <BookDisplayNavbarRange :max-page="maxPage" :current-page.sync="currentPage"/>
     </div>
   </div>
 
@@ -72,9 +75,13 @@
 
 
 <script>
+import BookDisplayNavbarRange from './BookDisplayNavbarRange.vue'
 
 export default {
   name: 'BookNavbar',
+  components: {
+    BookDisplayNavbarRange
+  },
   props: {
     maxPage: {
       type: Number,
@@ -109,15 +116,15 @@ export default {
 
 
 <style scoped>
-#book-bar-float {
-  z-index: 1000;
+.book-navbar-float {
+  z-index: 1100;
   position: fixed;
-  top:0px;
-  left:0px;
+  top: 70vh;
+  left: 0vh;
 }
 
-#book-bar-show-btn {
-  z-index: 1100;
+#book-navbar-show-btn {
+  z-index: 1000;
   position: fixed;
   top: 0vh;
   left: 35vw;
@@ -126,8 +133,8 @@ export default {
   border:blue solid;
 }
 
-#book-bar-left_page_btn {
-  z-index: 1100;
+#book-navbar-left_page_btn {
+  z-index: 1000;
   position: fixed;
   top: 0vh;
   left: 0vw;
@@ -136,8 +143,8 @@ export default {
   border:red solid;
 }
 
-#book-bar-right_page_btn {
-  z-index: 1100;
+#book-navbar-right_page_btn {
+  z-index: 1000;
   position: fixed;
   top: 0vh;
   left: 65vw;
