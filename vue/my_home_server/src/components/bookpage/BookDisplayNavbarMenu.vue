@@ -36,7 +36,7 @@ export default {
   props: {
     bookMenu: {  // 目录结构： [{index: xxx, name: xxx, chapters: [{index: xxx, name: xxx}, ...]}, ...]
       type: Array,
-      required: true
+      default: []
     },
     currentChapter: {
       type: Object,
@@ -48,20 +48,6 @@ export default {
       this.$emit('update:current-chapter', {partIndex: partIndex, chapterIndex: chapterIndex});
     }
   }
-  // data: function () {
-  //   return {
-  //     currentPageLocal: 1,
-  //     partId: 'fjskl'
-  //   }
-  // },
-  // watch: {
-  //   currentPageLocal: function() {
-  //     this.$emit('update:current-page', this.currentPageLocal);
-  //   },
-  //   currentPage: function() {
-  //     this.currentPageLocal = this.currentPage;
-  //   }
-  // }
 }
 </script>
 

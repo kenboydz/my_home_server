@@ -3,15 +3,16 @@
   <div>
     <!-- 导航 -->
     <div>
-      <book-display-navbar
+      <BookDisplayNavbar
         :max-page="maxPage"
+        :book-menu="bookMenu"
         @update:current-page="currentPage = $event"
       />
     </div>
     <b-row>
       <!-- chapter 显示 -->
       <b-col>
-        <book-display-chapter
+        <BookDisplayChapter
           :chapter-content="chapterContent"
           :current-page="currentPage"
           @update:max-page="maxPage = $event"
@@ -37,7 +38,12 @@ export default {
     return {
       chapterContent: `fjsklajflakvnalfwajrqw;`,
       currentPage: 1,
-      maxPage: 1
+      maxPage: 1,
+      bookMenu: [
+        {index:1, name: 'part1', chapters: [{index:11, name: 'chapter1'}, {index:12, name: 'chapter2'}]},
+        {index:2, name: 'part2', chapters: [{index:23, name: 'chapter3'}, {index:24, name: 'chapter4'}]},
+        {index:3, name: 'part3', chapters: [{index:35, name: 'chapter5'}, {index:36, name: 'chapter6'}]}
+      ]
     }
   }
 }
