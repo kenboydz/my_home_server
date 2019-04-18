@@ -15,7 +15,7 @@
           <b-list-group-item
             button
             v-for="chapter in part.chapters"
-            :class="{active: currentChapter.chapterIndex == chapter.index}"
+            :class="{active: currentChapter.partIndex == part.index && currentChapter.chapterIndex == chapter.index}"
             :key="chapter.index"
             @click="onChapterSelect(part.index, chapter.index)"
             >

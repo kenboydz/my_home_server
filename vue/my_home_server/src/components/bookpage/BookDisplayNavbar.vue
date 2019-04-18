@@ -45,22 +45,13 @@ export default {
     currentChapter: {
       type: Object,
       default: function() {
-        return {partIndex: 1, chapterIndex: 11};
+        return {partIndex: 1, chapterIndex: 1};
       }
     }
-    // currentPartIndex: {
-    //   type: Number,
-    //   default: 1
-    // },
-    // currentChapterIndex: {
-    //   type: Number,
-    //   default: 11
-    // }
   },
   data: function () {
     return {
-      showNavbar: false,
-      currentChapterLocal: {partIndex: 1, chapterIndex: 11}
+      showNavbar: false
     }
   },
   computed: {
@@ -72,14 +63,14 @@ export default {
         page = Math.max(1, Math.min(this.maxPage, page));
         this.$emit('update:current-page', page);
       }
-    }
-  },
-  watch: {
-    currentChapterLocal: function() {
-      this.$emit('update:current-chapter', this.currentChapterLocal);
     },
-    currentChapter: function() {
-      this.currentChapterLocal = this.currentChapter;
+    currentChapterLocal: {
+      get: function() {
+        return this.currentChapter;
+      },
+      set: function(chapter) {
+      this.$emit('update:current-chapter', chapter);
+      }
     }
   },
   methods: {
