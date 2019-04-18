@@ -1,15 +1,6 @@
 <template>
 
-  <b-container class="bg-secondary" fluid>
-    <!-- 全局导航栏 -->
-    <b-row align-v="start" v-show="false"><b-col>
-      <the-header />
-    </b-col></b-row>
-    <!-- book 显示 -->
-    <b-row><b-col>
-      <book-display />
-    </b-col></b-row>
-  </b-container>
+  <book-display />
 
 </template>
 

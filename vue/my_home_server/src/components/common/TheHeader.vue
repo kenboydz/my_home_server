@@ -1,10 +1,6 @@
 <template>
 
-    <b-navbar
-      toggleable="lg"
-      type="dark"
-      variant="dark"
-      >
+    <b-navbar toggleable="lg">
 
       <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
 

@@ -1,37 +1,41 @@
 <template>
 
-  <div>
-    <!-- 导航 -->
-    <div>
+  <b-container class="bg-secondary" fluid>
+    <!-- 全局导航栏 -->
+    <b-row align-v="start" v-show="showNavbar"><b-col>
+      <the-header />
+    </b-col></b-row>
+    <!-- book 显示 -->
+    <b-row><b-col>
+      <!-- 书目导航 -->
       <BookDisplayNavbar
         :max-page="maxPage"
         :book-menu="bookMenu"
         :current-page.sync="currentPage"
         :current-chapter.sync="currentChapter"
+        @update:show-navbar="showNavbar = $event"
       />
-    </div>
-    <b-row>
       <!-- chapter 显示 -->
-      <b-col>
-        <BookDisplayChapter
-          :chapter-content="chapterContent"
-          :current-page="currentPage"
-          @update:max-page="maxPage = $event"
-        />
-      </b-col>
-    </b-row>
-  </div>
+      <BookDisplayChapter
+        :chapter-content="chapterContent"
+        :current-page="currentPage"
+        @update:max-page="maxPage = $event"
+      />
+    </b-col></b-row>
+  </b-container>
 
 </template>
 
 
 <script>
+import TheHeader from '../common/TheHeader.vue'
 import BookDisplayNavbar from './BookDisplayNavbar.vue'
 import BookDisplayChapter from './BookDisplayChapter.vue'
 
 export default {
   name: 'BookDisplay',
   components: {
+    TheHeader,
     BookDisplayNavbar,
     BookDisplayChapter
   },
@@ -45,7 +49,8 @@ export default {
         {index:2, name: 'part2', chapters: [{index:1, name: 'chapter3'}, {index:2, name: 'chapter4'}]},
         {index:3, name: 'part3', chapters: [{index:1, name: 'chapter5'}, {index:2, name: 'chapter6'}]}
       ],
-      currentChapter: {partIndex: 1, chapterIndex: 11}
+      currentChapter: {partIndex: 1, chapterIndex: 11},
+      showNavbar: false
     }
   }
 }

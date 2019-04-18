@@ -103,9 +103,9 @@ export default {
 #book-navbar-show-btn {
   z-index: 1000;
   position: fixed;
-  top: 0vh;
+  top: 10vh;
   left: 35vw;
-  height: 100vh;
+  height: 80vh;
   width: 30vw;
   border:blue solid;
 }
@@ -113,9 +113,9 @@ export default {
 #book-navbar-left_page_btn {
   z-index: 1000;
   position: fixed;
-  top: 0vh;
+  top: 10vh;
   left: 0vw;
-  height: 100vh;
+  height: 80vh;
   width: 35vw;
   border:red solid;
 }
@@ -123,10 +123,10 @@ export default {
 #book-navbar-right_page_btn {
   z-index: 1000;
   position: fixed;
-  top: 0vh;
+  top: 10vh;
   left: 65vw;
-  height: 100vh;
-  width: 30vw;
+  height: 80vh;
+  width: 35vw;
   border:red solid;
 }
 </style>
