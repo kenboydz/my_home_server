@@ -1,14 +1,20 @@
 <template>
 
   <div id="book-navbar-full-screen">
-    <v-bottom-sheet>
+    <BookDisplayNavbarMenu
+      :show-up.sync="showBookMenu"
+      :book-menu="bookMenu"
+      :current-chapter.sync="currentChapterLocal"
+    />
+    <v-bottom-sheet v-model="varBarShowUp">
       <template v-slot:activator>
         <v-btn
           id="book-navbar-show-btn"
           absolute
           block
           flat
-          v-ripple="false"></v-btn>
+          v-ripple="false"
+        ></v-btn>
       </template>
       <v-card tile>
         <BookDisplayNavbarRange
@@ -18,7 +24,9 @@
         <v-list>
           <v-list-tile>
             <v-list-tile-action>
-              <v-btn icon>
+              <v-btn icon
+                @click="showBookMenu = !showBookMenu; varBarShowUp = false;"
+              >
                 <v-icon>list</v-icon>
               </v-btn>
             </v-list-tile-action>
@@ -84,6 +92,11 @@ export default {
       }
     }
   },
+  data: () => ({
+    varBarShowUp: false,
+    showBookMenu: false
+  })
+  ,
   computed: {
     currentPageLocal: {
       get: function() {
