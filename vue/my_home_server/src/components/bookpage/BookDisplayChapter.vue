@@ -1,13 +1,6 @@
 <template>
 
-  <div>
-    <!-- chapter显示 -->
-    <b-row>
-      <b-col>
-        <book-display-chapter-page :chapter-page-content="chapterPageContent" />
-      </b-col>
-    </b-row>
-  </div>
+  <book-display-chapter-page :chapter-page-content="chapterPageContent" />
 
 </template>
 
