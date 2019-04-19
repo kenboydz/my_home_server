@@ -3,7 +3,12 @@
   <div id="book-navbar-full-screen">
     <v-bottom-sheet>
       <template v-slot:activator>
-        <v-btn absolute block flat id="book-navbar-show-btn"></v-btn>
+        <v-btn
+          id="book-navbar-show-btn"
+          absolute
+          block
+          flat
+          v-ripple="false"></v-btn>
       </template>
       <v-container fluid>
         <v-layout row wrap align-center>
@@ -27,8 +32,18 @@
       </v-container>
     </v-bottom-sheet>
 
-    <v-btn absolute block flat id="book-navbar-left_page_btn" @click="onTurnPage(false)"></v-btn>
-    <v-btn absolute block flat id="book-navbar-right_page_btn" @click="onTurnPage(true)"></v-btn>
+    <v-btn id="book-navbar-left_page_btn"
+      absolute
+      block
+      flat
+      v-ripple="false"
+      @click="onTurnPage(false)"></v-btn>
+    <v-btn id="book-navbar-right_page_btn"
+      absolute
+      block
+      flat
+      v-ripple="false"
+      @click="onTurnPage(true)"></v-btn>
   </div>
 
 </template>
