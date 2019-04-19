@@ -4,10 +4,25 @@
   <v-app dark>
     
     <!-- <BaseFramework id="the-header-display" v-show="showNavbar" /> -->
-    <BaseFramework id="the-header-display" />
+    <BaseFramework v-show="showNavbar" />
 
     <v-content>
-      hehe
+
+      <!-- 书目导航 -->
+      <BookDisplayNavbar
+        :max-page="maxPage"
+        :book-menu="bookMenu"
+        :current-page.sync="currentPage"
+        :current-chapter.sync="currentChapter"
+        @update:show-navbar="showNavbar = $event"
+      />
+
+      <!-- chapter 显示 -->
+      <BookDisplayChapter
+        :chapter-content="chapterContent"
+        :current-page="currentPage"
+        @update:max-page="maxPage = $event"
+      />
     </v-content>
 
     <!-- <v-content>
@@ -91,7 +106,4 @@ export default {
 
 
 <style scoped>
-#the-header-display {
-  z-index: 2000;
-}
 </style>

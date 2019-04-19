@@ -1,6 +1,6 @@
 <template>
 
-  <div v-show="show">
+  <div>
 
     <v-navigation-drawer
       v-model="headerDrawer"
@@ -73,12 +73,6 @@
 <script>
 export default {
   name: 'BaseFramework',
-  props: {
-    show: {
-      type: Boolean,
-      default: true
-    }
-  },
   data: () => ({
       headerDrawer: null
   })

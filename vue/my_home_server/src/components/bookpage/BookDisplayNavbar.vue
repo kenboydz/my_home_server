@@ -1,65 +1,91 @@
 <template>
 
-  <!-- <div> -->
-    <!-- 控制显示和翻页的透明按钮 -->
-    <!-- <div id="book-navbar-show-btn" @click="onToggleShow"></div>
-    <div id="book-navbar-left_page_btn" @click="onTurnPage(false)"></div>
-    <div id="book-navbar-right_page_btn" @click="onTurnPage(true)"></div> -->
-    <!-- 悬浮显示控制菜单 -->
-    <!-- <div v-show="showNavbar"> -->
-      <!-- 书籍目录 -->
-      <!-- <BookDisplayNavbarMenu class="book-navbar-float"
-        :book-menu="bookMenu"
-        :current-chapter.sync="currentChapterLocal"
-      /> -->
-      <!-- 页码选择 -->
-      <!-- <BookDisplayNavbarRange class="book-navbar-float"
-        :max-page="maxPage"
-        :current-page.sync="currentPageLocal"
-      />
-    </div>
-  </div> -->
-  
-  <div>
+  <div class="text-xs-center">
+    <v-bottom-sheet>
+      <template v-slot:activator>
+        <v-btn absolute block flat id="book-navbar-show-btn"></v-btn>
+        <!-- <div id="book-navbar-show-btn"></div> -->
+      </template>
+      <v-card tile>
+        <v-progress-linear
+          :value="50"
+          class="my-0"
+          height="3"
+        ></v-progress-linear>
 
-    <b-navbar type="dark" variant="dark" fixed="bottom" v-show="showNavbar">
-      <b-navbar-nav><b-container><b-row>
-        <!-- 书籍目录显示 -->
-        <b-col cols="2">
-          <!-- <b-nav-text>
-              <BookDisplayNavbarMenu class="book-navbar-float"
-              :book-menu="bookMenu"
-              :current-chapter.sync="currentChapterLocal"
-            />
-          </b-nav-text> -->
-          <b-nav-text><b-button size="sm">G1</b-button></b-nav-text>
-        </b-col>
-        <!-- 功能2 -->
-        <b-col cols="2">
-          <b-nav-text><b-button size="sm">G2</b-button></b-nav-text>
-        </b-col>
-        <!-- 功能3 -->
-        <b-col cols="2">
-          <b-nav-text><b-button size="sm">G3</b-button></b-nav-text>
-        </b-col>
-        <!-- 页码选择 -->
-        <b-col cols="6">
-          <b-nav-text>
-            <BookDisplayNavbarRange
-              :max-page="maxPage"
-              :current-page.sync="currentPageLocal"
-            />
-          </b-nav-text>
-        </b-col>
-      </b-row></b-container></b-navbar-nav>
+        <v-list>
+          <v-list-tile>
+            <v-list-tile-content>
+              <v-list-tile-title>The Walker</v-list-tile-title>
+              <v-list-tile-sub-title>Fitz & The Trantrums</v-list-tile-sub-title>
+            </v-list-tile-content>
 
-    </b-navbar>
-    
-    <div id="book-navbar-show-btn" @click="onToggleShow"></div>
-    <div id="book-navbar-left_page_btn" @click="onTurnPage(false)"></div>
-    <div id="book-navbar-right_page_btn" @click="onTurnPage(true)"></div>
+            <v-spacer></v-spacer>
 
+            <v-list-tile-action>
+              <v-btn icon>
+                <v-icon>fast_rewind</v-icon>
+              </v-btn>
+            </v-list-tile-action>
+
+            <v-list-tile-action :class="{ 'mx-5': $vuetify.breakpoint.mdAndUp }">
+              <v-btn icon>
+                <v-icon>pause</v-icon>
+              </v-btn>
+            </v-list-tile-action>
+
+            <v-list-tile-action :class="{ 'mr-3': $vuetify.breakpoint.mdAndUp }">
+              <v-btn icon>
+                <v-icon>fast_forward</v-icon>
+              </v-btn>
+            </v-list-tile-action>
+          </v-list-tile>
+        </v-list>
+      </v-card>
+    </v-bottom-sheet>
   </div>
+
+  <!-- <v-card
+    class="hide-overflow"
+    height="200px"
+  >
+    <v-card-text class="text-xs-center">
+      <v-btn
+        flat
+        color="primary"
+        @click="showNavbar = !showNavbar"
+      >
+        Toggle Nav
+      </v-btn>
+      <BookDisplayChapter
+        :chapter-content="chapterContent"
+        :current-page="currentPage"
+        @update:max-page="maxPage = $event"
+      />
+    </v-card-text>
+
+    <v-bottom-nav
+      :active.sync="activeBtn"
+      :value="showNavbar"
+      absolute
+      color="transparent"
+    >
+      <v-btn flat color="teal">
+        <span>Recents</span>
+        <v-icon>history</v-icon>
+      </v-btn>
+
+      <v-btn flat color="teal">
+        <span>Favorites</span>
+        <v-icon>favorite</v-icon>
+      </v-btn>
+
+      <v-btn flat color="teal">
+        <span>Nearby</span>
+        <v-icon>place</v-icon>
+      </v-btn>
+    </v-bottom-nav>
+  </v-card> -->
 
 </template>
 
@@ -67,12 +93,14 @@
 <script>
 import BookDisplayNavbarMenu from './BookDisplayNavbarMenu.vue'
 import BookDisplayNavbarRange from './BookDisplayNavbarRange.vue'
+import BookDisplayChapter from './BookDisplayChapter.vue'
 
 export default {
   name: 'BookDisplayNavbar',
   components: {
     BookDisplayNavbarMenu,
-    BookDisplayNavbarRange
+    BookDisplayNavbarRange,
+    BookDisplayChapter
   },
   props: {
     maxPage: {
@@ -96,11 +124,12 @@ export default {
       }
     }
   },
-  data: function () {
-    return {
-      showNavbar: false
-    }
-  },
+  data: () => ({
+      chapterContent: `fjsklajflakvnalfwajrqw;`,
+      currentPage: 1,
+      maxPage: 1,
+      activeBtn: 1
+  }),
   computed: {
     currentPageLocal: {
       get: function() {
@@ -121,11 +150,6 @@ export default {
     }
   },
   methods: {
-    onToggleShow: function() {
-      // 转换显示标志
-      this.showNavbar = !this.showNavbar;
-      this.$emit('update:show-navbar', this.showNavbar);
-    },
     onTurnPage: function(toNextPage) {
       // 翻页事件，默认翻到下一页
       if (toNextPage) {
@@ -141,12 +165,11 @@ export default {
 
 <style scoped>
 #book-navbar-show-btn {
-  z-index: 1000;
-  position: fixed;
-  top: 0vh;
-  left: 35vw;
-  height: 100vh;
-  width: 30vw;
+  top: 80vh;
+  left: 0vw;
+  height: 20vh;
+  width: 100vw;
+  /* opacity: 0%; */
   border: solid red;
 }
 
