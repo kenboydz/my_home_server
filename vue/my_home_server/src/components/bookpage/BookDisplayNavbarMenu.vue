@@ -4,35 +4,38 @@
       v-model="showUpLocal"
       absolute
     >
-    <v-list class="pa-1">
-      <v-list-tile avatar>
-        <v-list-tile-avatar>
-          <img src="https://randomuser.me/api/portraits/men/85.jpg">
-        </v-list-tile-avatar>
-
-        <v-list-tile-content>
-          <v-list-tile-title>John Leider</v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-    </v-list>
-
-    <v-list class="pt-0" dense>
-      <v-divider></v-divider>
-
+    <list>
+      <v-list-group
+        prepend-icon=""
+        no-action
+        value="true"
+        v-for="part in bookMenu"
+        :key="part.index"
+      >
+      <template v-slot:activator>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>bookmarks</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title v-text="part.name"></v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </template>
       <v-list-tile
-        v-for="item in items"
-        :key="item.title"
-        @click=""
+        v-for="chapter in part.chapters"
+        :key="chapter.index"
+        href="#"
       >
         <v-list-tile-action>
-          <v-icon>{{ item.icon }}</v-icon>
+          <v-icon>bookmark</v-icon>
         </v-list-tile-action>
-
         <v-list-tile-content>
-          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          <v-list-tile-title v-text="chapter.name"></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-    </v-list>
+      </v-list-group>
+    </list>
   </v-navigation-drawer>
 
   <!-- <b-list-group>
