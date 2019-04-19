@@ -1,10 +1,9 @@
 <template>
 
-  <div class="text-xs-center">
+  <div id="book-navbar-full-screen">
     <v-bottom-sheet>
       <template v-slot:activator>
         <v-btn absolute block flat id="book-navbar-show-btn"></v-btn>
-        <!-- <div id="book-navbar-show-btn"></div> -->
       </template>
       <v-card tile>
         <v-progress-linear
@@ -43,6 +42,9 @@
         </v-list>
       </v-card>
     </v-bottom-sheet>
+
+    <v-btn absolute block flat id="book-navbar-left_page_btn" @click="onTurnPage(false)"></v-btn>
+    <v-btn absolute block flat id="book-navbar-right_page_btn" @click="onTurnPage(true)"></v-btn>
   </div>
 
   <!-- <v-card
@@ -164,30 +166,36 @@ export default {
 
 
 <style scoped>
+#book-navbar-full-screen {
+  position: fixed;
+  top: 0vh;
+  left: 0vw;
+  height: 100vh;
+  width: 100vw;
+  /* border: solid green; */
+}
+
 #book-navbar-show-btn {
   top: 80vh;
   left: 0vw;
   height: 20vh;
   width: 100vw;
-  /* opacity: 0%; */
   border: solid red;
 }
 
 #book-navbar-left_page_btn {
-  z-index: 1000;
-  position: fixed;
-  top: 00vh;
+  top: 20vh;
   left: 0vw;
-  height: 100vh;
-  width: 35vw;
+  height: 60vh;
+  width: 50vw;
+  border: solid blue;
 }
 
 #book-navbar-right_page_btn {
-  z-index: 1000;
-  position: fixed;
-  top: 00vh;
-  left: 65vw;
-  height: 100vh;
-  width: 35vw;
+  top: 20vh;
+  left: 50vw;
+  height: 60vh;
+  width: 50vw;
+  border: solid blue;
 }
 </style>
