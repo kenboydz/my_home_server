@@ -1,21 +1,15 @@
 <template>
 
-  <div>
-    <b-form-input id="book-display-nav-bar-range-page-show"
+    <v-slider
       v-model.number.lazy="currentPageLocal"
-      type="range"
-      min="1"
+      thumb-label="always"
       :max="maxPage"
-      @change="onInputRangeChanged"
-    ></b-form-input>
-    <b-tooltip
-      ref="pageShowToolTips"
-      target="book-display-nav-bar-range-page-show"
-      placement="top"
-    >
-     {{ currentPageLocal }} / {{ maxPage }}
-    </b-tooltip>
-  </div>
+      min="1"
+      prepend-icon="keyboard_arrow_left"
+      @click:prepend="currentPageLocal -= 1"
+      append-icon="keyboard_arrow_right"
+      @click:append="currentPageLocal += 1"
+    ></v-slider>
 
 </template>
 
