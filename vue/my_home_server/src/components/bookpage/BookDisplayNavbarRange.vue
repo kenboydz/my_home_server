@@ -5,9 +5,9 @@
       thumb-label="always"
       :max="maxPage"
       min="1"
-      prepend-icon="keyboard_arrow_left"
+      prepend-icon="navigate_before"
       @click:prepend="currentPageLocal -= 1"
-      append-icon="keyboard_arrow_right"
+      append-icon="navigate_next"
       @click:append="currentPageLocal += 1"
     ></v-slider>
 

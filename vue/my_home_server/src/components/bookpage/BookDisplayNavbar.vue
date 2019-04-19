@@ -10,26 +10,29 @@
           flat
           v-ripple="false"></v-btn>
       </template>
-      <v-container fluid>
-        <v-layout row wrap align-center>
-          <v-flex shrink>
-            <v-btn icon>
-              <v-icon>list</v-icon>
-            </v-btn>
-          </v-flex>
-          <v-flex grow>
-            <BookDisplayNavbarRange
-              :max-page="maxPage"
-              :current-page.sync="currentPageLocal"
-            />
-          </v-flex>
-          <v-flex shrink>
-            <v-btn icon>
-              <v-icon>more_horiz</v-icon>
-            </v-btn>
-          </v-flex>
-        </v-layout>
-      </v-container>
+      <v-card tile>
+        <BookDisplayNavbarRange
+          :max-page="maxPage"
+          :current-page.sync="currentPageLocal"
+        />
+        <v-list>
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-btn icon>
+                <v-icon>list</v-icon>
+              </v-btn>
+            </v-list-tile-action>
+
+            <v-spacer></v-spacer>
+            
+            <v-list-tile-action>
+              <v-btn icon>
+                <v-icon>more_horiz</v-icon>
+              </v-btn>
+            </v-list-tile-action>
+          </v-list-tile>
+        </v-list>
+      </v-card>
     </v-bottom-sheet>
 
     <v-btn id="book-navbar-left_page_btn"
