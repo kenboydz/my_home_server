@@ -5,12 +5,11 @@ import store from './store'
 
 Vue.config.productionTip = false
 
-import BootstrapVue from 'bootstrap-vue'
+import Vuetify from 'vuetify'
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 
-Vue.use(BootstrapVue)
+Vue.use(Vuetify)
 
 
 new Vue({

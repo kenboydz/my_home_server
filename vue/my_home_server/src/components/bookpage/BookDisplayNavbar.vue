@@ -1,17 +1,64 @@
 <template>
 
-  <div>
+  <!-- <div> -->
     <!-- 控制显示和翻页的透明按钮 -->
+    <!-- <div id="book-navbar-show-btn" @click="onToggleShow"></div>
+    <div id="book-navbar-left_page_btn" @click="onTurnPage(false)"></div>
+    <div id="book-navbar-right_page_btn" @click="onTurnPage(true)"></div> -->
+    <!-- 悬浮显示控制菜单 -->
+    <!-- <div v-show="showNavbar"> -->
+      <!-- 书籍目录 -->
+      <!-- <BookDisplayNavbarMenu class="book-navbar-float"
+        :book-menu="bookMenu"
+        :current-chapter.sync="currentChapterLocal"
+      /> -->
+      <!-- 页码选择 -->
+      <!-- <BookDisplayNavbarRange class="book-navbar-float"
+        :max-page="maxPage"
+        :current-page.sync="currentPageLocal"
+      />
+    </div>
+  </div> -->
+  
+  <div>
+
+    <b-navbar type="dark" variant="dark" fixed="bottom" v-show="showNavbar">
+      <b-navbar-nav><b-container><b-row>
+        <!-- 书籍目录显示 -->
+        <b-col cols="2">
+          <!-- <b-nav-text>
+              <BookDisplayNavbarMenu class="book-navbar-float"
+              :book-menu="bookMenu"
+              :current-chapter.sync="currentChapterLocal"
+            />
+          </b-nav-text> -->
+          <b-nav-text><b-button size="sm">G1</b-button></b-nav-text>
+        </b-col>
+        <!-- 功能2 -->
+        <b-col cols="2">
+          <b-nav-text><b-button size="sm">G2</b-button></b-nav-text>
+        </b-col>
+        <!-- 功能3 -->
+        <b-col cols="2">
+          <b-nav-text><b-button size="sm">G3</b-button></b-nav-text>
+        </b-col>
+        <!-- 页码选择 -->
+        <b-col cols="6">
+          <b-nav-text>
+            <BookDisplayNavbarRange
+              :max-page="maxPage"
+              :current-page.sync="currentPageLocal"
+            />
+          </b-nav-text>
+        </b-col>
+      </b-row></b-container></b-navbar-nav>
+
+    </b-navbar>
+    
     <div id="book-navbar-show-btn" @click="onToggleShow"></div>
     <div id="book-navbar-left_page_btn" @click="onTurnPage(false)"></div>
     <div id="book-navbar-right_page_btn" @click="onTurnPage(true)"></div>
-    <!-- 悬浮显示控制菜单 -->
-    <div id="book-navbar-float" v-show="showNavbar">
-      <!-- 书籍目录 -->
-      <BookDisplayNavbarMenu :book-menu="bookMenu" :current-chapter.sync="currentChapterLocal"/>
-      <!-- 页码选择 -->
-      <BookDisplayNavbarRange :max-page="maxPage" :current-page.sync="currentPageLocal"/>
-    </div>
+
   </div>
 
 </template>
@@ -93,13 +140,6 @@ export default {
 
 
 <style scoped>
-#book-navbar-float {
-  z-index: 1100;
-  position: fixed;
-  top: 20vh;
-  left: 0vh;
-}
-
 #book-navbar-show-btn {
   z-index: 1000;
   position: fixed;
@@ -107,7 +147,7 @@ export default {
   left: 35vw;
   height: 100vh;
   width: 30vw;
-  /* border:blue solid; */
+  border: solid red;
 }
 
 #book-navbar-left_page_btn {
@@ -117,7 +157,6 @@ export default {
   left: 0vw;
   height: 100vh;
   width: 35vw;
-  /* border:red solid; */
 }
 
 #book-navbar-right_page_btn {
@@ -127,6 +166,5 @@ export default {
   left: 65vw;
   height: 100vh;
   width: 35vw;
-  /* border:red solid; */
 }
 </style>

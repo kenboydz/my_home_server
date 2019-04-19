@@ -5,13 +5,13 @@
 </template>
 
 <script>
-import TheHeader from '../components/common/TheHeader.vue'
+import BookMenu from '../components/bookpage/BookMenu.vue'
 import BookDisplay from '../components/bookpage/BookDisplay.vue'
 
 export default {
   name: 'BookPage',
   components: {
-    TheHeader,
+    BookMenu,
     BookDisplay
   }
 }

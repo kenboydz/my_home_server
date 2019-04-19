@@ -1,39 +1,74 @@
 <template>
 
-  <b-container fluid>
+  
+  <v-app dark>
+    
+    <!-- <BaseFramework id="the-header-display" v-show="showNavbar" /> -->
+    <BaseFramework id="the-header-display" />
+
+    <v-content>
+      hehe
+    </v-content>
+
+    <!-- <v-content>
+      <v-container fill-height>
+        <v-layout justify-center align-center>
+          <v-flex shrink>
+            <v-tooltip right>
+              <template v-slot:activator="{ on }">
+                <v-btn :href="source" icon large target="_blank" v-on="on">
+                  <v-icon large>code</v-icon>
+                </v-btn>
+              </template>
+              <span>Source</span>
+            </v-tooltip>
+            <v-tooltip right>
+              <template v-slot:activator="{ on }">
+                <v-btn icon large href="https://codepen.io/johnjleider/pen/YeRKwQ" target="_blank" v-on="on">
+                  <v-icon large>mdi-codepen</v-icon>
+                </v-btn>
+              </template>
+              <span>Codepen</span>
+            </v-tooltip>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content> -->
+  </v-app>
+
+  <!-- <b-container fluid> -->
     <!-- 全局导航栏 -->
-    <TheHeader id="the-header-display" v-show="showNavbar" />
-    <!-- book 显示 -->
-    <b-row><b-col>
-      <!-- 书目导航 -->
-      <BookDisplayNavbar
-        :max-page="maxPage"
-        :book-menu="bookMenu"
-        :current-page.sync="currentPage"
-        :current-chapter.sync="currentChapter"
-        @update:show-navbar="showNavbar = $event"
-      />
+    <!-- <TheHeader id="the-header-display" v-show="showNavbar" /> -->
+    <!-- 书目导航 -->
+    <!-- <BookDisplayNavbar
+      :max-page="maxPage"
+      :book-menu="bookMenu"
+      :current-page.sync="currentPage"
+      :current-chapter.sync="currentChapter"
+      @update:show-navbar="showNavbar = $event"
+    /> -->
+    <!-- <b-row><b-col> -->
       <!-- chapter 显示 -->
-      <BookDisplayChapter
+      <!-- <BookDisplayChapter
         :chapter-content="chapterContent"
         :current-page="currentPage"
         @update:max-page="maxPage = $event"
-      />
-    </b-col></b-row>
-  </b-container>
+      /> -->
+    <!-- </b-col></b-row> -->
+  <!-- </b-container> -->
 
 </template>
 
 
 <script>
-import TheHeader from '../common/TheHeader.vue'
+import BaseFramework from '../common/BaseFramework.vue'
 import BookDisplayNavbar from './BookDisplayNavbar.vue'
 import BookDisplayChapter from './BookDisplayChapter.vue'
 
 export default {
   name: 'BookDisplay',
   components: {
-    TheHeader,
+    BaseFramework,
     BookDisplayNavbar,
     BookDisplayChapter
   },
