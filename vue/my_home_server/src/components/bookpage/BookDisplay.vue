@@ -95,9 +95,13 @@ export default {
       bookMenu: [
         {index:1, name: 'part1', chapters: [{index:1, name: 'chapter1'}, {index:2, name: 'chapter2'}]},
         {index:2, name: 'part2', chapters: [{index:1, name: 'chapter3'}, {index:2, name: 'chapter4'}]},
-        {index:3, name: 'part3', chapters: [{index:1, name: 'chapter5'}, {index:2, name: 'chapter6'}]}
+        {index:3, name: 'part3', chapters: [{index:1, name: 'chapter5'}, {index:2, name: 'chapter6'}]},
+        {index:4, name: 'part4', chapters: [{index:1, name: 'chapter5'}, {index:2, name: 'chapter6'}]},
+        {index:5, name: 'part5', chapters: [{index:1, name: 'chapter5'}, {index:2, name: 'chapter6'}]},
+        {index:6, name: 'part6', chapters: [{index:1, name: 'chapter5'}, {index:2, name: 'chapter6'}]},
+        {index:7, name: 'part7', chapters: [{index:1, name: 'chapter5'}, {index:2, name: 'chapter6'}]}
       ],
-      currentChapter: {partIndex: 1, chapterIndex: 11},
+      currentChapter: {partIndex: 1, chapterIndex: 1},
       showNavbar: false
     }
   }
