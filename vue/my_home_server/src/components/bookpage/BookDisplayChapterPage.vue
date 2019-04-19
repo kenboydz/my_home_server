@@ -18,9 +18,4 @@ export default {
 
 
 <style scoped>
-#book-display-chapter-page {
-  z-index: -100;
-  /* position: fixed; */
-  height:100vh;
-}
 </style>
