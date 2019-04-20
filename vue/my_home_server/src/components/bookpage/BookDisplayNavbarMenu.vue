@@ -6,11 +6,10 @@
     >
     <list>
       <v-list-group
-        prepend-icon=""
         no-action
-        value="true"
         v-for="part in bookMenu"
         :key="part.index"
+        :value="currentChapter.partIndex === part.index"
       >
       <template v-slot:activator>
         <v-list-tile>
