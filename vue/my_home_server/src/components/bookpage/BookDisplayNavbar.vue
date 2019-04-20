@@ -6,7 +6,7 @@
       :book-menu="bookMenu"
       :current-chapter.sync="currentChapterLocal"
     />
-    <v-bottom-sheet v-model="varBarShowUp">
+    <v-bottom-sheet v-model="bottomSheetShowUp">
       <template v-slot:activator>
         <v-btn
           id="book-navbar-show-btn"
@@ -25,7 +25,7 @@
           <v-list-tile>
             <v-list-tile-action>
               <v-btn icon
-                @click="showBookMenu = !showBookMenu; varBarShowUp = false;"
+                @click="showBookMenu = !showBookMenu; bottomSheetShowUp = false;"
               >
                 <v-icon>list</v-icon>
               </v-btn>
@@ -93,7 +93,7 @@ export default {
     }
   },
   data: () => ({
-    varBarShowUp: false,
+    bottomSheetShowUp: false,
     showBookMenu: false
   })
   ,
