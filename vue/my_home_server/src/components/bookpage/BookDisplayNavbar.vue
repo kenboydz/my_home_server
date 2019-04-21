@@ -10,7 +10,7 @@
       <template v-slot:activator>
         <v-btn
           id="book-navbar-show-btn"
-          absolute
+          fixed
           block
           flat
           v-ripple="false"
@@ -44,13 +44,13 @@
     </v-bottom-sheet>
 
     <v-btn id="book-navbar-left_page_btn"
-      absolute
+      fixed
       block
       flat
       v-ripple="false"
       @click="onTurnPage(false)"></v-btn>
     <v-btn id="book-navbar-right_page_btn"
-      absolute
+      fixed
       block
       flat
       v-ripple="false"
@@ -131,14 +131,13 @@ export default {
 
 
 <style scoped>
-#book-navbar-full-screen {
+/* #book-navbar-full-screen {
   position: fixed;
   top: 0vh;
   left: 0vw;
   height: 100vh;
   width: 100vw;
-  /* border: solid green; */
-}
+} */
 
 #book-navbar-show-btn {
   top: 80vh;
