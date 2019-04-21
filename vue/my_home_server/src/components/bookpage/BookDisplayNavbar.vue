@@ -131,20 +131,13 @@ export default {
 
 
 <style scoped>
-/* #book-navbar-full-screen {
-  position: fixed;
-  top: 0vh;
-  left: 0vw;
-  height: 100vh;
-  width: 100vw;
-} */
 
 #book-navbar-show-btn {
   top: 80vh;
   left: 0vw;
   height: 20vh;
   width: 100vw;
-  border: solid red;
+  /* border: solid red; */
 }
 
 #book-navbar-left_page_btn {
@@ -152,7 +145,7 @@ export default {
   left: 0vw;
   height: 60vh;
   width: 50vw;
-  border: solid blue;
+  /* border: solid blue; */
 }
 
 #book-navbar-right_page_btn {
@@ -160,6 +153,6 @@ export default {
   left: 50vw;
   height: 60vh;
   width: 50vw;
-  border: solid blue;
+  /* border: solid blue; */
 }
 </style>

@@ -4,7 +4,6 @@
 
     <BaseFramework id="book-header-navbar" v-show="showHeaderNavbar" />
     <v-btn id="book-header-navbar-showup-btn"
-      fixed
       block
       flat
       v-ripple="false"
@@ -13,6 +12,7 @@
 
     <!-- 书目导航 -->
     <BookDisplayNavbar
+      id="book-display-navbar"
       :max-page="maxPage"
       :book-menu="bookMenu"
       :current-page.sync="currentPage"
@@ -21,6 +21,7 @@
 
     <!-- chapter 显示 -->
     <BookDisplayChapter
+      id="book-display-chapter"
       :chapter-content="chapterContent"
       :current-page="currentPage"
       @update:max-page="maxPage = $event"
@@ -67,15 +68,25 @@ export default {
 
 <style scoped>
 #book-header-navbar {
-  position: absolute;
+  z-index: 300;
+  position: fixed;
 }
 
 #book-header-navbar-showup-btn {
+  z-index: 200;
   position: fixed;
   top: 0vh;
   left: 0vw;
   height: 20vh;
   width: 100vw;
-  border: solid green;
+  /* border: solid green; */
+}
+
+#book-display-navbar {
+  z-index: 200;
+}
+
+#book-display-chapter {
+  position: fixed;
 }
 </style>
