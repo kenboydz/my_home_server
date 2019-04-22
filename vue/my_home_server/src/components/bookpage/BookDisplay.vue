@@ -2,7 +2,7 @@
 
   <v-app dark>
 
-    <BaseFramework id="book-header-navbar" v-show="showHeaderNavbar" />
+    <TheHeader id="book-header-navbar" v-show="showHeaderNavbar" />
     <v-btn id="book-header-navbar-showup-btn"
       block
       flat
@@ -33,14 +33,14 @@
 
 
 <script>
-import BaseFramework from '../common/BaseFramework.vue'
+import TheHeader from '../common/TheHeader.vue'
 import BookDisplayNavbar from './BookDisplayNavbar.vue'
 import BookDisplayChapter from './BookDisplayChapter.vue'
 
 export default {
   name: 'BookDisplay',
   components: {
-    BaseFramework,
+    TheHeader,
     BookDisplayNavbar,
     BookDisplayChapter
   },

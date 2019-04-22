@@ -72,7 +72,7 @@
 
 <script>
 export default {
-  name: 'BaseFramework',
+  name: 'TheHeader',
   data: () => ({
       headerDrawer: null
   })
