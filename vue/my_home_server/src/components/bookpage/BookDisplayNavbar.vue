@@ -133,9 +133,9 @@ export default {
 <style scoped>
 
 #book-navbar-show-btn {
-  top: 80vh;
+  top: 70vh;
   left: 0vw;
-  height: 20vh;
+  height: 30vh;
   width: 100vw;
   /* border: solid red; */
 }
@@ -143,7 +143,7 @@ export default {
 #book-navbar-left_page_btn {
   top: 20vh;
   left: 0vw;
-  height: 60vh;
+  height: 50vh;
   width: 50vw;
   /* border: solid blue; */
 }
@@ -151,7 +151,7 @@ export default {
 #book-navbar-right_page_btn {
   top: 20vh;
   left: 50vw;
-  height: 60vh;
+  height: 50vh;
   width: 50vw;
   /* border: solid blue; */
 }
