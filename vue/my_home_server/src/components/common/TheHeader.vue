@@ -10,7 +10,7 @@
     >
       <v-list dense>
 
-        <v-list-tile href="#">
+        <v-list-tile to="/">
           <v-list-tile-action>
             <v-icon>home</v-icon>
           </v-list-tile-action>
@@ -21,13 +21,24 @@
           </v-list-tile-content>
         </v-list-tile>
 
-        <v-list-tile href="#">
+        <v-list-tile to="/book-page">
           <v-list-tile-action>
             <v-icon>book</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>
               Book
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
+        <v-list-tile to="/about-page">
+          <v-list-tile-action>
+            <v-icon>help</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              About
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>

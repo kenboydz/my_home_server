@@ -1,17 +1,11 @@
 <template>
-  <div id="app">
-    <BookPage />
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
-import BookPage from './views/BookPage.vue'
 
 export default {
-  name: 'app',
-  components: {
-    BookPage
-  }
+  name: 'app'
 }
 </script>
 

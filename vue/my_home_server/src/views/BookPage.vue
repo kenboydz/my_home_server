@@ -1,6 +1,6 @@
 <template>
 
-  <book-display />
+  <BookDisplay />
 
 </template>
 
