@@ -59,7 +59,7 @@ export default {
         {index:7, name: 'part7', chapters: [{index:1, name: 'chapter5'}, {index:2, name: 'chapter6'}]}
       ],
       currentChapter: {partIndex: 1, chapterIndex: 1},
-      showHeaderNavbar: true
+      showHeaderNavbar: false
     }
   }
 }
